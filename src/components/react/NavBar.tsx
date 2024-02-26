@@ -4,12 +4,17 @@ export default function NavBar ()
 {
 
     return (
-        <div className="nav-bar">
-            <ul>
+        <nav className="nav-bar">
+            <ul className='menu'>
                 <li>Home</li>
                 <li>Search</li>
-                <li>Library</li>
             </ul>
-        </div>
+            <div className='library'>
+                <div className='library-header'>
+                    Library
+                </div>
+
+            </div>
+        </nav>
     )
 }
