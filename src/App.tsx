@@ -6,7 +6,7 @@ import Login from './pages/Login'
 import { useUserStore } from './store/user'
 import { useAuthStore } from './store/auth'
 import { currentToken, getToken } from './services/auth'
-import { getCurrentUserProfile } from './services/apiRequest/user/user'
+import { getCurrentUserProfile } from './services/apiRequest/user'
 
 function App() {
 

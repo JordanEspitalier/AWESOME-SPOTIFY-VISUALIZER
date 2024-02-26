@@ -1,7 +1,7 @@
 import axios from "axios"
-import { API_BASE_URI } from "../../../utils/constants"
-import { currentToken, refreshToken } from "../../auth"
-import { UserProfile } from "../../../models/UserProfile"
+import { API_BASE_URI } from "../../utils/constants"
+import { currentToken, refreshToken } from "../auth"
+import { UserProfile } from "../../models/UserProfile"
 
 
 export const getCurrentUserProfile = async () => 
