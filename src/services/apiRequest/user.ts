@@ -18,6 +18,6 @@ export const getCurrentUserProfile = async () =>
                 const {data} = await axios.get<UserProfile>(`${API_BASE_URI}me`, { headers })
                 return data
             } 
-            throw new Error(error)  
+        throw new Error(error)  
     }
 }
