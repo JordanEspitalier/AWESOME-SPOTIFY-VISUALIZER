@@ -4,14 +4,18 @@ import axios from "axios"
 
 interface userState 
 {
+    userIsLogged : boolean
+    setUserIsLogged : (isLogged : boolean) => void
     curentUserProfile : object
     getCurrentUserProfile : (e? : Event, token? : string | null) => void
 }
 
 export const useUserStore = create<userState>((set)=>
 ({
-    curentUserProfile : {},
+    userIsLogged : false,
+    setUserIsLogged : (isLogged) =>set({userIsLogged : isLogged}),
 
+    curentUserProfile : {},
     getCurrentUserProfile : async (e, token) =>
     {
         try 
@@ -31,12 +35,11 @@ export const useUserStore = create<userState>((set)=>
                     Authorization : `Bearer ${token}`
                 }
             })
-    
             set({curentUserProfile : data})
-            
         } 
-        catch (error) 
+        catch (error : any) 
         {
+            if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired') set({userIsLogged : false})
             throw error    
         }
     }

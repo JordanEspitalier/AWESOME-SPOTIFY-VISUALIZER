@@ -6,7 +6,8 @@ export default function Login ()
 {
     const getCurrentUserProfile = useUserStore(store => store.getCurrentUserProfile)
     const currentUserProfile = useUserStore(store => store.curentUserProfile)
-    console.log(currentUserProfile)
+    const setUserIsLogged = useUserStore(store => store.setUserIsLogged)
+    //console.log(currentUserProfile)
 
     useEffect(()=>
     {
@@ -19,8 +20,7 @@ export default function Login ()
             window.location.hash = ''
             typeof(token) === 'string' && window.localStorage.setItem('token', token)
         }
-
-        getCurrentUserProfile()
+        setUserIsLogged(true)
 
     },[])
     return (
