@@ -21,11 +21,6 @@ export const currentToken =
     }
 }
 
-// On page load, try to fetch auth code from current browser search URL
-const args = new URLSearchParams(window.location.search);
-const code = args.get('code');
-
-
 
 export async function redirectToSpotifyAuthorize() {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -77,10 +72,11 @@ export async function redirectToSpotifyAuthorize() {
       body: params
     })
   
-    return await response.json()
+    const token =  await response.json()
+    currentToken.save(token)
   }
   
-  async function refreshToken() {
+  export async function refreshToken() {
     const params = new URLSearchParams()
     params.append('client_id', CLIENT_ID)
     params.append('grant_type', 'refresh_token')
@@ -94,5 +90,6 @@ export async function redirectToSpotifyAuthorize() {
       body: params
     })
   
-    return await response.json()
+    const token =  await response.json()
+    currentToken.save(token)
   }

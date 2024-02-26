@@ -6,12 +6,13 @@ import Login from './pages/Login'
 import { useUserStore } from './store/user'
 import { useAuthStore } from './store/auth'
 import { currentToken, getToken } from './services/auth'
+import { getCurrentUserProfile } from './services/apiRequest/user/user'
 
 function App() {
 
   const userIsLogged = useAuthStore(state => state.userIsLogged)
   const setUserIsLogged = useAuthStore(state => state.setUserIsLogged)
-  const getCurrentUserProfile = useUserStore(state => state.getCurrentUserProfile)
+  const setCurrentUserProfile = useUserStore(state => state.setCurrentUserProfile)
 
 
   useEffect(()=>
@@ -23,11 +24,7 @@ function App() {
     // If we find a code, we're in a callback, do a token exchange
     if(code)
     {
-      getToken(code).then(token =>
-        {
-          currentToken.save(token)
-          setUserIsLogged(true)
-        })
+      getToken(code).then(()=>setUserIsLogged(true))
 
       // Remove code from URL so we can refresh correctly.
       const url = new URL(window.location.href)
@@ -40,7 +37,8 @@ function App() {
     if(currentToken.access_token && currentToken.access_token!= 'undefined')
     {
       setUserIsLogged(true)
-      getCurrentUserProfile()
+      // Get user from api and store it
+      getCurrentUserProfile().then(user => setCurrentUserProfile(user))
     }
 
     // Otherwise we're not logged in
