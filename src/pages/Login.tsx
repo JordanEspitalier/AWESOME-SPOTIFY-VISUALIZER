@@ -1,35 +1,17 @@
-import { useEffect, useState } from "react"
-import { useUserStore } from "../store/user"
-import { HREF_LOGIN } from "../utils/constants"
+
+import { redirectToSpotifyAuthorize } from "../services/auth"
 
 export default function Login () 
 {
-    const getCurrentUserProfile = useUserStore(store => store.getCurrentUserProfile)
-    const currentUserProfile = useUserStore(store => store.curentUserProfile)
-    const setUserIsLogged = useUserStore(store => store.setUserIsLogged)
-    //console.log(currentUserProfile)
+    const loginWithSpotifyClick = async () => await redirectToSpotifyAuthorize()
 
-    useEffect(()=>
-    {
-        const hash : string  = window.location.hash
-        let token : string | null | undefined = window.localStorage.getItem('token')
-
-        if(!token && hash)
-        {
-            token = hash.substring(1).split('&').find(elem => elem.startsWith('access_token'))?.split('=')[1]
-            window.location.hash = ''
-            typeof(token) === 'string' && window.localStorage.setItem('token', token)
-        }
-        setUserIsLogged(true)
-
-    },[])
     return (
         <div className="login">
             <header className="login-header">
                 <h1>Awesome Spotify Visualizer</h1>
             </header>
             <div className="login-body">
-                <a href={HREF_LOGIN}>Login to Spotify</a>
+                <button onClick={loginWithSpotifyClick}>Login to Spotify</button>
             </div>
         </div>
     )

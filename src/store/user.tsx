@@ -1,45 +1,38 @@
 import { create } from "zustand"
 import { API_BASE_URI } from "../utils/constants"
 import axios from "axios"
+import { currentToken } from "../services/auth"
+import { UserProfile } from "../models/UserProfile"
 
-interface userState 
+interface UserState 
 {
-    userIsLogged : boolean
-    setUserIsLogged : (isLogged : boolean) => void
-    curentUserProfile : object
-    getCurrentUserProfile : (e? : Event, token? : string | null) => void
+    curentUserProfile : UserProfile | {}
+    getCurrentUserProfile : (e? : Event) => void
 }
 
-export const useUserStore = create<userState>((set)=>
+export const useUserStore = create<UserState>((set)=>
 ({
-    userIsLogged : false,
-    setUserIsLogged : (isLogged) =>set({userIsLogged : isLogged}),
 
     curentUserProfile : {},
-    getCurrentUserProfile : async (e, token) =>
+    getCurrentUserProfile : async (e) =>
     {
         try 
         {
             if(e) e.preventDefault()
     
-            if(!token)
-            {
-                token = window.localStorage.getItem('token')
-                if(!token) throw 'There is no token'
-            }
-    
             const {data} = await axios.get(`${API_BASE_URI}me`,
             {
                 headers : 
                 {
-                    Authorization : `Bearer ${token}`
+                    Authorization : `Bearer ${currentToken.access_token}`
                 }
             })
+            console.log(data)
             set({curentUserProfile : data})
         } 
         catch (error : any) 
         {
-            if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired') set({userIsLogged : false})
+    
             throw error    
         }
     }
