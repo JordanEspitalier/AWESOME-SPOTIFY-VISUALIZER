@@ -1,11 +1,11 @@
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react'
+import { useState } from 'react'
 import './search.css'
-import { searchForItems } from '../services/apiRequest/search'
 import SearchDisplayAll from '../components/react/searchDisplay/SearchDisplayAll'
 import SearchDisplayArtists from '../components/react/searchDisplay/SearchDisplayArtists'
 import SearchDisplayTracks from '../components/react/searchDisplay/SearchDisplayTracks'
 import SearchDisplayPlaylists from '../components/react/searchDisplay/SearchDisplayPlaylists'
 import SearchDisplayAlbums from '../components/react/searchDisplay/SearchDisplayAlbums'
+import SearchDisplayWaiting from '../components/react/searchDisplay/searchDisplayWaiting'
 
 enum SearchTypes
 {
@@ -16,50 +16,46 @@ enum SearchTypes
     playlists = 'playlist'
 }
 
+const searchDisplay = (type : SearchTypes, searchQuery : string) => 
+{
+
+    if(searchQuery.length === 0) return <SearchDisplayWaiting />
+    switch (type) {
+        case SearchTypes.all:
+            return <SearchDisplayAll searchQuery = {searchQuery}/>
+        case SearchTypes.artists:
+            return <SearchDisplayArtists searchQuery = {searchQuery}/>
+        case SearchTypes.tracks :
+            return <SearchDisplayTracks searchQuery = {searchQuery}/>
+        case SearchTypes.playlists : 
+            return <SearchDisplayPlaylists searchQuery = {searchQuery}/>
+        case SearchTypes.albums : 
+            return <SearchDisplayAlbums searchQuery = {searchQuery}/>
+        default:
+            return <div>404</div>
+    }
+}
+
 export function Search () 
 {
-    const [data, setData] = useState<any>()
     const [searchQuery, setSearchQuery] = useState('')
     const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.all)
-    const [albums, setAlbums] = useState<any>()
-    const [artists, setArtists] = useState<any>()
-    const [tracks, setTracks] = useState<any>()
-    const [playlists, setPlaylist] = useState<any>()
 
-    const renderTracks = () =>
+
+/*     const renderTracks = () =>
     {
         return data.tracks.items.map((track: { name: string, id : string}) => (
             <div key={track.id}>
                 {track.name}
             </div>
         ))
-    }
-    const searchDisplay = (type : SearchTypes) => 
-    {
-        switch (type) {
-            case SearchTypes.all:
-                return <SearchDisplayAll />
-            case SearchTypes.artists:
-                return <SearchDisplayArtists />
-            case SearchTypes.tracks :
-                return <SearchDisplayTracks />
-            case SearchTypes.playlists : 
-                return <SearchDisplayPlaylists />
-            case SearchTypes.albums : 
-                return <SearchDisplayAlbums/>
-            default:
-                return <div>Nothing to display</div>
-        }
-    }
+    } */
 
-    useEffect(()=>
+    /*     useEffect(()=>
     {
-        if(searchQuery != '')
-        {
-            searchForItems(searchQuery).then(data => setData(data))
-            console.log(data)
-        }
-    },[searchQuery])
+
+    },[searchQuery]) */
+
 
     return(
     <div className="search">
@@ -68,17 +64,14 @@ export function Search ()
         </form>
         <div className='search-tags-container'>
             <ul className='search-tags'>
-                <li className='search-tag' onClick={ ()=> setSearchType(SearchTypes.all)}>All</li>
-                <li className='search-tag' onClick={ ()=> setSearchType(SearchTypes.artists)}>Artists</li>
-                <li className='search-tag' onClick={ ()=> setSearchType(SearchTypes.tracks)}>Tracks</li>
-                <li className='search-tag' onClick={ ()=> setSearchType(SearchTypes.playlists)}>Playlists</li>
-                <li className='search-tag' onClick={ ()=> setSearchType(SearchTypes.albums)}>Albums</li>
+                <li className={`search-tag ${searchType === SearchTypes.all && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.all)}>All</li>
+                <li className={`search-tag ${searchType === SearchTypes.artists && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.artists)}>Artists</li>
+                <li className={`search-tag ${searchType === SearchTypes.tracks && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.tracks)}>Tracks</li>
+                <li className={`search-tag ${searchType === SearchTypes.playlists && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.playlists)}>Playlists</li>
+                <li className={`search-tag ${searchType === SearchTypes.albums && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.albums)}>Albums</li>
             </ul>
         </div>
-        {searchDisplay(searchType)}
-        <div className='search-results'>
-            {data && renderTracks()}
-        </div>
+        {searchDisplay(searchType, searchQuery)}
     </div>
     ) 
 }

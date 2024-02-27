@@ -1,8 +1,9 @@
+import { SearchProps } from './interfaceSearchDisplayProps'
+import './searchDisplayArtists.css'
 
-
-function SearchDisplayArtists() {
+function SearchDisplayArtists({searchQuery} : SearchProps) {
   return (
-    <div>SearchDisplayArtists</div>
+    <div className='searchDisplayArtists'>SearchDisplayArtists</div>
   )
 }
 

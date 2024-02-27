@@ -53,6 +53,12 @@
 
 }
 
+.search-tag.active
+{
+    color: black;
+    background-color: white;
+}
+
 .search-results
 {
     overflow: auto;
