@@ -2,17 +2,12 @@ import { API_BASE_URI } from "../../utils/constants"
 import axios from "axios"
 import { currentToken, refreshToken } from "../auth"
 
-const baseParams = 
-{
-    type : 'track,artist,album,playlist',
-    limit : 20,
 
-}
-
-export const searchForItems = async (query:string) =>
+export const searchForItems = async (query:string, type:string = 'track,artist,album,playlist', limit : number = 6) =>
 {
     const headers = {Authorization : `Bearer ${currentToken.access_token}`}
-    const params = {...baseParams, q : query}
+    const params = {q : query, type, limit}
+
     try {
         const {data} = await axios.get(`${API_BASE_URI}search`, { headers, params })
         return data
