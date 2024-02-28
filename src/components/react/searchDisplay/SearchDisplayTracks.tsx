@@ -1,7 +1,7 @@
 import { SearchProps } from './interfaceSearchDisplayProps'
 import './searchDisplayTracks.css'
 
-function SearchDisplayTracks({searchQuery} : SearchProps) {
+function SearchDisplayTracks({searchQuery, searchType} : SearchProps) {
   return (
     <div className='searchDisplayTracks'>SearchDisplayTracks</div>
   )

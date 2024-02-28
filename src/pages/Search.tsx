@@ -6,15 +6,9 @@ import SearchDisplayTracks from '../components/react/searchDisplay/SearchDisplay
 import SearchDisplayPlaylists from '../components/react/searchDisplay/SearchDisplayPlaylists'
 import SearchDisplayAlbums from '../components/react/searchDisplay/SearchDisplayAlbums'
 import SearchDisplayWaiting from '../components/react/searchDisplay/searchDisplayWaiting'
+import { SearchTypes } from '../models/SearchTypes'
 
-enum SearchTypes
-{
-    all = 'track,artist,album,playlist',
-    artists = 'artist',
-    tracks = 'track',
-    albums = 'albums',
-    playlists = 'playlist'
-}
+
 
 const searchDisplay = (type : SearchTypes, searchQuery : string) => 
 {
@@ -22,15 +16,15 @@ const searchDisplay = (type : SearchTypes, searchQuery : string) =>
     if(searchQuery.length === 0) return <SearchDisplayWaiting />
     switch (type) {
         case SearchTypes.all:
-            return <SearchDisplayAll searchQuery = {searchQuery}/>
+            return <SearchDisplayAll searchQuery = {searchQuery} searchType={type}/>
         case SearchTypes.artists:
-            return <SearchDisplayArtists searchQuery = {searchQuery}/>
+            return <SearchDisplayArtists searchQuery = {searchQuery} searchType={type}/>
         case SearchTypes.tracks :
-            return <SearchDisplayTracks searchQuery = {searchQuery}/>
+            return <SearchDisplayTracks searchQuery = {searchQuery} searchType={type}/>
         case SearchTypes.playlists : 
-            return <SearchDisplayPlaylists searchQuery = {searchQuery}/>
+            return <SearchDisplayPlaylists searchQuery = {searchQuery} searchType={type}/>
         case SearchTypes.albums : 
-            return <SearchDisplayAlbums searchQuery = {searchQuery}/>
+            return <SearchDisplayAlbums searchQuery = {searchQuery} searchType={type}/>
         default:
             return <div>404</div>
     }
@@ -58,7 +52,7 @@ export function Search ()
 
 
     return(
-    <div className="search">
+    <div className={`search ${searchQuery.length === 0 && 'animate'}`}>
         <form className='search-form'>
             <input className='search-form-input' type='text' onChange={(e)=>setSearchQuery(e.target.value)}></input>
         </form>
@@ -71,7 +65,9 @@ export function Search ()
                 <li className={`search-tag ${searchType === SearchTypes.albums && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.albums)}>Albums</li>
             </ul>
         </div>
-        {searchDisplay(searchType, searchQuery)}
+        <div className='search-results'>
+            {searchDisplay(searchType, searchQuery)}
+        </div>
     </div>
     ) 
 }
