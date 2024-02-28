@@ -1,4 +1,5 @@
 import { useNavStore } from '../../store/nav'
+import { Link } from 'react-router-dom'
 import './navBar.css'
 
 export default function NavBar () 

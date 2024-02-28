@@ -36,21 +36,6 @@ export function Search ()
     const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.all)
 
 
-/*     const renderTracks = () =>
-    {
-        return data.tracks.items.map((track: { name: string, id : string}) => (
-            <div key={track.id}>
-                {track.name}
-            </div>
-        ))
-    } */
-
-    /*     useEffect(()=>
-    {
-
-    },[searchQuery]) */
-
-
     return(
     <div className={`search ${searchQuery.length === 0 && 'animate'}`}>
         <form className='search-form'>

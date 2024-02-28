@@ -16,7 +16,7 @@ function SearchDisplayArtists({searchQuery, searchType} : SearchProps) {
         })
         .catch(error => console.log(error))
         
-    },[])
+    },[searchQuery])
 
   return (
     <div className='searchDisplayArtists'>
