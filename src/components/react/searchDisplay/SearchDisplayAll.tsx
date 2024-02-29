@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useActionData, useParams } from 'react-router-dom'
 import './searchDisplayAll.css'
 
 function SearchDisplayAll() {
-    const params = useParams()
-    const query = params['query']
+    const {query} = useParams()
+    const data = useActionData()
+    console.log(data)
   return (
     <div className='searchDisplayAll'>SearchDisplayAll</div>
   )

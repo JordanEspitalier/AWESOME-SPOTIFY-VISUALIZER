@@ -9,6 +9,7 @@ import SearchDisplayArtists from "../components/react/searchDisplay/SearchDispla
 import SearchDisplayTracks from "../components/react/searchDisplay/SearchDisplayTracks";
 import SearchDisplayPlaylists from "../components/react/searchDisplay/SearchDisplayPlaylists";
 import SearchDisplayAlbums from "../components/react/searchDisplay/SearchDisplayAlbums";
+import { searchForItems } from "../services/apiRequest/search";
 
 export const router = createBrowserRouter([
     {
@@ -21,7 +22,16 @@ export const router = createBrowserRouter([
           children: [
             {
                 path : ':query',
-                element : <SearchDisplayAll />
+                element : <SearchDisplayAll />,
+                action: async ({params, request}) => 
+                {
+                    if(params.query)
+                    {
+                        console.log('hello')
+                        const data = await searchForItems(params.query)
+                        return data
+                    }
+                }
             },
             {
                 path : ':query/artists',
