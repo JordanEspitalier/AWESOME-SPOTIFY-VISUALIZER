@@ -1,65 +1,38 @@
-import { useEffect, useState } from 'react'
 import './search.css'
-import SearchDisplayAll from '../components/react/searchDisplay/SearchDisplayAll'
-import SearchDisplayArtists from '../components/react/searchDisplay/SearchDisplayArtists'
-import SearchDisplayTracks from '../components/react/searchDisplay/SearchDisplayTracks'
-import SearchDisplayPlaylists from '../components/react/searchDisplay/SearchDisplayPlaylists'
-import SearchDisplayAlbums from '../components/react/searchDisplay/SearchDisplayAlbums'
-import SearchDisplayWaiting from '../components/react/searchDisplay/SearchDisplayWaiting'
-import { SearchTypes } from '../models/SearchTypes'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useMatch, useNavigate, useParams } from 'react-router-dom'
 
-
-
-/* const searchDisplay = (type : SearchTypes, searchQuery : string) => 
-{
-
-    if(searchQuery.length === 0) return <SearchDisplayWaiting />
-    switch (type) {
-        case SearchTypes.all:
-            return <SearchDisplayAll searchQuery = {searchQuery} searchType={type}/>
-        case SearchTypes.artists:
-            return <SearchDisplayArtists searchQuery = {searchQuery} searchType={type}/>
-        case SearchTypes.tracks :
-            return <SearchDisplayTracks searchQuery = {searchQuery} searchType={type}/>
-        case SearchTypes.playlists : 
-            return <SearchDisplayPlaylists searchQuery = {searchQuery} searchType={type}/>
-        case SearchTypes.albums : 
-            return <SearchDisplayAlbums searchQuery = {searchQuery} searchType={type}/>
-        default:
-            return <div>404</div>
-    }
-} */
 
 export default function Search () 
 {
-    const [searchQuery, setSearchQuery] = useState('')
-    const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.all)
+    const {query, type} = useParams()
     const navigate = useNavigate()
-    useEffect(()=>
-    {
-        if(searchQuery.length) navigate(`/search/${searchQuery}`)
-        if(searchType != SearchTypes.all && searchQuery.length) navigate(`/search/${searchQuery}/${searchType}s`)
-        if(!searchQuery.length) navigate('/search')
 
-    },[searchQuery, searchType])
 
     return(
-    <div className={`search ${searchQuery.length === 0 && 'animate'}`}>
+    <div className={`search ${query?.length === 0 && 'animate'}`}>
         <form className='search-form'>
-            <input className='search-form-input' type='text' onChange={(e)=>setSearchQuery(e.target.value)}></input>
+            <input value={query ? query : ''} className='search-form-input' type='text' onChange={(e)=>navigate(`/search/${e.target.value}${type ? '/' + type: ''}`)} />
         </form>
-        <div className='search-tags-container' style={searchQuery.length ? {visibility : 'visible'} :  {visibility : 'hidden'}}>
+        <div className='search-tags-container' style={query?.length ? {visibility : 'visible'} :  {visibility : 'hidden'}}>
             <ul className='search-tags'>
-                <li className={`search-tag ${searchType === SearchTypes.all && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.all)}>All</li>
-                <li className={`search-tag ${searchType === SearchTypes.artists && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.artists)}>Artists</li>
-                <li className={`search-tag ${searchType === SearchTypes.tracks && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.tracks)}>Tracks</li>
-                <li className={`search-tag ${searchType === SearchTypes.playlists && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.playlists)}>Playlists</li>
-                <li className={`search-tag ${searchType === SearchTypes.albums && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.albums)}>Albums</li>
+                <li className={`search-tag ${useMatch('/search/:query') && 'active'}`}>
+                    <Link to={`/search/${query}`}>All</Link>
+                </li>
+                <li className={`search-tag ${useMatch('/search/:query/artists') && 'active'}`}>
+                    <Link to={`/search/${query}/artists`}>Artists</Link>
+                </li>
+                <li className={`search-tag ${useMatch('/search/:query/tracks') && 'active'}`}>
+                    <Link to={`/search/${query}/tracks`}>Tracks</Link>
+                </li>
+                <li className={`search-tag ${useMatch('/search/:query/playlists') && 'active'}`}>
+                    <Link to={`/search/${query}/playlists`}>Playlists</Link>
+                </li>
+                <li className={`search-tag ${useMatch('/search/:query/albums') && 'active'}`}>
+                    <Link to={`/search/${query}/albums`}>Albums</Link>
+                </li>
             </ul>
         </div>
         <div className='search-results'>
-{/*             {searchDisplay(searchType, searchQuery)} */}
             <Outlet />
         </div>
     </div>

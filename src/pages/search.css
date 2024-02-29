@@ -17,6 +17,7 @@
     flex-direction: column;
     gap: 5px;
     padding-left: 20px;
+    padding-right: 10px;
     animation: gradientMove 3s ease 0s infinite normal none;
     animation-play-state: paused;
 
@@ -78,6 +79,12 @@
 
 .search-results
 {
-    overflow: auto;
+    overflow : auto;
+    scrollbar-width: 0px;
     height: 87%;
+}
+
+::-webkit-scrollbar
+{
+    width: 0px;
 }

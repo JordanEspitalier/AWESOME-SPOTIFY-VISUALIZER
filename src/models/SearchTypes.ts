@@ -1,8 +1,8 @@
 export enum SearchTypes
 {
     all = 'track,artist,album,playlist',
-    artists = 'artist',
-    tracks = 'track',
+    artists = 'artists',
+    tracks = 'tracks',
     albums = 'albums',
-    playlists = 'playlist'
+    playlists = 'playlists'
 }

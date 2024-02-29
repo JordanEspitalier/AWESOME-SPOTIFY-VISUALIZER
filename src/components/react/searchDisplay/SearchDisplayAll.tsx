@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { SearchProps } from './interfaceSearchDisplayProps'
 import './searchDisplayAll.css'
 
 function SearchDisplayAll() {

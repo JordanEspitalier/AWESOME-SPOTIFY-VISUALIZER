@@ -1,7 +1,6 @@
 import './searchDisplayAlbums.css'
-import { SearchProps } from './interfaceSearchDisplayProps'
 
-function SearchDisplayAlbums ({searchQuery} : SearchProps){
+function SearchDisplayAlbums (){
   return (
     <div className='searchDisplayAlbums'>SearchDisplayAlbums</div>
   )

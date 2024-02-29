@@ -40,7 +40,7 @@ function App() {
       setUserIsLogged(true)
       // Get user from api and store it
       getCurrentUserProfile().then(user => {
-        console.log('looged')
+        //console.log('looged')
         setCurrentUserProfile(user)
         //navigate('/')
       })
@@ -52,7 +52,7 @@ function App() {
       setUserIsLogged(false)
 
     }
-    console.log(userIsLogged)
+    //console.log(userIsLogged)
 
   },[userIsLogged])
   return (

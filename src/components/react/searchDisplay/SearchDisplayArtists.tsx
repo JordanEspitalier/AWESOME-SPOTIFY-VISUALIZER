@@ -1,5 +1,4 @@
 import { Key, useEffect, useState } from 'react'
-import { SearchProps } from './interfaceSearchDisplayProps'
 import './searchDisplayArtists.css'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
@@ -14,7 +13,7 @@ function SearchDisplayArtists() {
     useEffect(()=>
     {
         if(query)
-        searchForItems(query, SearchTypes.artists, 20)
+        searchForItems(query, 'artist', 20)
         .then(data =>{
             setArtists(data.artists.items)
         })
