@@ -3,7 +3,6 @@ import './searchDisplayArtists.css'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
 import { useParams } from 'react-router-dom'
-import { SearchTypes } from '../../../models/SearchTypes'
 
 
 function SearchDisplayArtists() {
@@ -13,7 +12,7 @@ function SearchDisplayArtists() {
     useEffect(()=>
     {
         if(query)
-        searchForItems(query, 'artist', 20)
+        searchForItems(query, 'artist', 25)
         .then(data =>{
             setArtists(data.artists.items)
         })

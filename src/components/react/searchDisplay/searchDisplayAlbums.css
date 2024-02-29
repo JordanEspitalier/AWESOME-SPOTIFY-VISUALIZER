@@ -1,0 +1,45 @@
+
+.searchDisplayAlbums
+{
+    height: 100%;
+    display: grid;
+    grid-gap: 24px;
+    flex-wrap: wrap;
+    margin-right: 10px;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+}
+
+@media (max-width : 1880px) {
+    .searchDisplayAlbums
+    {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width : 1655px) {
+    .searchDisplayAlbums
+    {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width : 1345px) {
+    .searchDisplayAlbums
+    {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width : 1035px) {
+    .searchDisplayAlbums
+    {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width : 835px) {
+    .searchDisplayAlbums
+    {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

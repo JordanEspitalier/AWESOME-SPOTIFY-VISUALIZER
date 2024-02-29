@@ -1,8 +1,10 @@
-
+import { refreshToken } from '../../../services/auth'
 
 function SearchDisplayWaiting() {
   return (
-    <div className='searchDisplayWaiting'>searchDisplayWaiting</div>
+    <div className='searchDisplayWaiting'>
+         <button onClick={refreshToken}>RefrechToken</button>
+    </div>
   )
 }
 

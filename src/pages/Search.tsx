@@ -1,3 +1,4 @@
+import SearchDisplayWaiting from '../components/react/searchDisplay/SearchDisplayWaiting'
 import './search.css'
 import { Link, Outlet, useMatch, useNavigate, useParams } from 'react-router-dom'
 
@@ -8,7 +9,7 @@ export default function Search ()
     const navigate = useNavigate()          
 
     return(
-    <div className={`search ${!query?.length ? 'animate' : ''}`}>
+    <div className={`search ${query?.length ? '' : 'animate'}`}>
         <form className='search-form' method='get'>
             <input value={query ? query : ''} className='search-form-input' type='text' onChange={(e)=>navigate(`/search/${e.target.value}${type ? '/' + type: ''}`, {replace : true})} />
         </form>
@@ -32,7 +33,7 @@ export default function Search ()
             </ul>
         </div>
         <div className='search-results'>
-            <Outlet />
+            {query?.length ? <Outlet /> : <SearchDisplayWaiting />}
         </div>
     </div>
     ) 
