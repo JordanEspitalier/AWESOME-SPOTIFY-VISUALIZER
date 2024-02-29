@@ -15,7 +15,7 @@ export const searchForItems = async (query:string, type:string = 'track,artist,a
     } catch (error : any) {
          if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired')
             {
-                refreshToken()
+                await refreshToken()
                 const {data} = await axios.get(`${API_BASE_URI}search`, { headers, params })
                 return data
             } 

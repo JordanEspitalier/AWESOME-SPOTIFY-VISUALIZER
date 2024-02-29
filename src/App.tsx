@@ -48,8 +48,8 @@ function App() {
 
     // Otherwise we're not logged in
     if (!currentToken.access_token) {
-      navigate('/login')
       setUserIsLogged(false)
+      navigate('/login')
 
     }
     //console.log(userIsLogged)

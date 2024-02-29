@@ -91,5 +91,6 @@ export async function redirectToSpotifyAuthorize() {
     })
   
     const token =  await response.json()
+    console.log(token)
     currentToken.save(token)
   }

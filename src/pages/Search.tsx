@@ -8,7 +8,7 @@ export default function Search ()
     const navigate = useNavigate()          
 
     return(
-    <div className={`search ${query?.length === 0 && 'animate'}`}>
+    <div className={`search ${!query?.length ? 'animate' : ''}`}>
         <form className='search-form' method='get'>
             <input value={query ? query : ''} className='search-form-input' type='text' onChange={(e)=>navigate(`/search/${e.target.value}${type ? '/' + type: ''}`, {replace : true})} />
         </form>

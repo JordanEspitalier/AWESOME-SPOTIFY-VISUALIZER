@@ -1,12 +1,14 @@
-import { useActionData, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import './searchDisplayAll.css'
+import { refreshToken } from '../../../services/auth'
 
 function SearchDisplayAll() {
     const {query} = useParams()
-    const data = useActionData()
-    console.log(data)
+
   return (
-    <div className='searchDisplayAll'>SearchDisplayAll</div>
+    <div className='searchDisplayAll'>
+        <button onClick={refreshToken}>RefrechToken</button>
+    </div>
   )
 }
 
