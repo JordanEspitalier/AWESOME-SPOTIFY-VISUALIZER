@@ -7,13 +7,14 @@ import { useUserStore } from './store/user'
 import { useAuthStore } from './store/auth'
 import { currentToken, getToken } from './services/auth'
 import { getCurrentUserProfile } from './services/apiRequest/user'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 function App() {
 
   const userIsLogged = useAuthStore(state => state.userIsLogged)
   const setUserIsLogged = useAuthStore(state => state.setUserIsLogged)
   const setCurrentUserProfile = useUserStore(state => state.setCurrentUserProfile)
-
+  const navigate = useNavigate()
 
   useEffect(()=>
   {
@@ -38,22 +39,26 @@ function App() {
     {
       setUserIsLogged(true)
       // Get user from api and store it
-      getCurrentUserProfile().then(user => setCurrentUserProfile(user))
+      getCurrentUserProfile().then(user => {
+        console.log('looged')
+        setCurrentUserProfile(user)
+        //navigate('/')
+      })
     }
 
     // Otherwise we're not logged in
     if (!currentToken.access_token) {
+      navigate('/login')
       setUserIsLogged(false)
-    }
-  },[userIsLogged])
 
+    }
+    console.log(userIsLogged)
+
+  },[userIsLogged])
   return (
     <>
-      {userIsLogged ?
       <Home />
-      :
-      <Login />
-      }
+      
     </>
   )
 }

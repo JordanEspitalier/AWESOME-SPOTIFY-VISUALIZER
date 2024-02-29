@@ -3,20 +3,24 @@ import { SearchProps } from './interfaceSearchDisplayProps'
 import './searchDisplayArtists.css'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
+import { useParams } from 'react-router-dom'
+import { SearchTypes } from '../../../models/SearchTypes'
 
 
-function SearchDisplayArtists({searchQuery, searchType} : SearchProps) {
+function SearchDisplayArtists() {
 
     const [artists, setArtists] = useState<any>()
+    const {query} = useParams()
     useEffect(()=>
     {
-        searchForItems(searchQuery, searchType, 20)
+        if(query)
+        searchForItems(query, SearchTypes.artists, 20)
         .then(data =>{
             setArtists(data.artists.items)
         })
         .catch(error => console.log(error))
         
-    },[searchQuery])
+    },[query])
 
   return (
     <div className='searchDisplayArtists'>

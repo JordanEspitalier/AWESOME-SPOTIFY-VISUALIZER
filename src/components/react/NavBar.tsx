@@ -1,17 +1,15 @@
-import { useNavStore } from '../../store/nav'
+
 import { Link } from 'react-router-dom'
 import './navBar.css'
 
 export default function NavBar () 
 {
 
-    const setNav = useNavStore(state => state.setNav)
-
     return (
         <nav className="nav-bar">
             <ul className='menu'>
-                <li onClick={()=>setNav({nav :'home'})}>Home</li>
-                <li onClick={()=>setNav({nav :'search'})}>Search</li>
+                <li> <Link to={`/`}>Home</Link> </li>
+                <li> <Link to={`/search`}>Search</Link></li>
             </ul>
             <div className='library'>
                 <div className='library-header'>

@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './search.css'
 import SearchDisplayAll from '../components/react/searchDisplay/SearchDisplayAll'
 import SearchDisplayArtists from '../components/react/searchDisplay/SearchDisplayArtists'
 import SearchDisplayTracks from '../components/react/searchDisplay/SearchDisplayTracks'
 import SearchDisplayPlaylists from '../components/react/searchDisplay/SearchDisplayPlaylists'
 import SearchDisplayAlbums from '../components/react/searchDisplay/SearchDisplayAlbums'
-import SearchDisplayWaiting from '../components/react/searchDisplay/searchDisplayWaiting'
+import SearchDisplayWaiting from '../components/react/searchDisplay/SearchDisplayWaiting'
 import { SearchTypes } from '../models/SearchTypes'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 
 
-const searchDisplay = (type : SearchTypes, searchQuery : string) => 
+/* const searchDisplay = (type : SearchTypes, searchQuery : string) => 
 {
 
     if(searchQuery.length === 0) return <SearchDisplayWaiting />
@@ -28,20 +29,27 @@ const searchDisplay = (type : SearchTypes, searchQuery : string) =>
         default:
             return <div>404</div>
     }
-}
+} */
 
-export function Search () 
+export default function Search () 
 {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.all)
+    const navigate = useNavigate()
+    useEffect(()=>
+    {
+        if(searchQuery.length) navigate(`/search/${searchQuery}`)
+        if(searchType != SearchTypes.all && searchQuery.length) navigate(`/search/${searchQuery}/${searchType}s`)
+        if(!searchQuery.length) navigate('/search')
 
+    },[searchQuery, searchType])
 
     return(
     <div className={`search ${searchQuery.length === 0 && 'animate'}`}>
         <form className='search-form'>
             <input className='search-form-input' type='text' onChange={(e)=>setSearchQuery(e.target.value)}></input>
         </form>
-        <div className='search-tags-container'>
+        <div className='search-tags-container' style={searchQuery.length ? {visibility : 'visible'} :  {visibility : 'hidden'}}>
             <ul className='search-tags'>
                 <li className={`search-tag ${searchType === SearchTypes.all && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.all)}>All</li>
                 <li className={`search-tag ${searchType === SearchTypes.artists && 'active'}`} onClick={ ()=> setSearchType(SearchTypes.artists)}>Artists</li>
@@ -51,7 +59,8 @@ export function Search ()
             </ul>
         </div>
         <div className='search-results'>
-            {searchDisplay(searchType, searchQuery)}
+{/*             {searchDisplay(searchType, searchQuery)} */}
+            <Outlet />
         </div>
     </div>
     ) 

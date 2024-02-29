@@ -48,6 +48,7 @@
 {
     width: 100%;
     min-height: 30px;
+    height: 5%;
     user-select: none;
 }
 .search-tags
@@ -78,4 +79,5 @@
 .search-results
 {
     overflow: auto;
+    height: 87%;
 }
