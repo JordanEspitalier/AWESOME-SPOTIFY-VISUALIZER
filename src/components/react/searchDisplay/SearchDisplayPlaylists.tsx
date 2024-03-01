@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom'
 
 function SearchDisplayPlaylists() {
     const [playlists, setPlaylists] = useState<any>()
-    console.log(playlists)
     const {query} = useParams()
     useEffect(()=>
     {

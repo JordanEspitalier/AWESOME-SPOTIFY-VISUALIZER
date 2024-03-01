@@ -1,0 +1,52 @@
+
+.searchDisplayTracks
+{
+    width: 100%;
+    grid-gap: 24px;
+    margin-right: 10px;
+}
+
+.searchDisplayTracks-header
+{
+    height: 50px;
+    border-bottom: 1px solid white;
+}
+
+.searchDisplayTracks-body
+{
+    width: 100%;
+}
+
+@media (max-width : 1880px) {
+    .searchDisplayPlaylists
+    {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width : 1655px) {
+    .searchDisplayPlaylists
+    {
+
+    }
+}
+
+@media (max-width : 1345px) {
+    .searchDisplayPlaylists
+    {
+
+    }
+}
+
+@media (max-width : 1035px) {
+    .searchDisplayPlaylists
+    {
+
+    }
+}
+@media (max-width : 835px) {
+    .searchDisplayPlaylists
+    {
+
+    }
+}

@@ -1,9 +1,39 @@
 
 import './searchDisplayTracks.css'
+import { Key, useEffect, useState } from 'react'
+import { searchForItems } from '../../../services/apiRequest/search'
+import { useParams } from 'react-router-dom'
+import TrackRow from '../table/TrackRow'
 
 function SearchDisplayTracks() {
+
+    const [tracks, setTracks] = useState<any>()
+    const {query} = useParams()
+    console.log(tracks)
+    useEffect(()=>
+    {
+        if(query)
+        searchForItems(query, 'track', 50)
+        .then(data =>{
+            setTracks(data.tracks.items)
+        })
+        .catch(error => console.log(error))
+        
+    },[query])
   return (
-    <div className='searchDisplayTracks'>SearchDisplayTracks</div>
+    <table className="searchDisplayTracks">
+        <thead className="searchDisplayTracks-header">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Album</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+            <tbody className='searchDisplayTracks-body'>
+                {tracks && tracks.map((track : any, index : any)=><TrackRow track={track} tableIndex={index + 1}/>)}
+            </tbody>
+    </table>
   )
 }
 
