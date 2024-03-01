@@ -11,7 +11,7 @@ export default function Search ()
     return(
     <div className={`search ${query?.length ? '' : 'animate'}`}>
         <form className='search-form' method='get'>
-            <input value={query ? query : ''} className='search-form-input' type='text' onChange={(e)=>navigate(`/search/${e.target.value}${type ? '/' + type: ''}`, {replace : true})} />
+            <input value={query ? query : ''} className='search-form-input' type='text' onChange={(e)=>navigate(`/search${e.target.value ? '/' + e.target.value : ''}${type === undefined ? '' : `/${type}`}`, {replace : true})} />
         </form>
         <div className='search-tags-container' style={query?.length ? {visibility : 'visible'} :  {visibility : 'hidden'}}>
             <ul className='search-tags'>
