@@ -8,8 +8,8 @@ import TrackRow from '../table/TrackRow'
 function SearchDisplayTracks() {
 
     const [tracks, setTracks] = useState<any>()
+    //console.log(scroll)
     const {query} = useParams()
-    console.log(tracks)
     useEffect(()=>
     {
         if(query)
@@ -22,7 +22,7 @@ function SearchDisplayTracks() {
     },[query])
   return (
     <table className="searchDisplayTracks">
-        <thead className="searchDisplayTracks-header">
+        <thead className= "searchDisplayTracks-header">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>

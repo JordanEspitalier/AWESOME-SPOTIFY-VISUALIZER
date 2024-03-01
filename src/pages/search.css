@@ -1,16 +1,10 @@
-@keyframes gradientMove {
-    0%{background-position:0% 0%}
-    50%{background-position:0% 40%}
-    100%{background-position:0% 0%}
-}
+
 
 .search
 {
     width: 85% ;
     height: 100% ;
     background-color: rgb(20, 20, 20);
-    background: linear-gradient(171deg, rgba(0,11,150,1) 0%, rgba(3,0,95,1) 40%, rgba(2,0,36,1) 100%);
-    background-size: 200% 200%;
     background-position: 0%;
     border-radius: 8px;
     display: flex;
@@ -21,10 +15,6 @@
     animation: gradientMove 3s ease 0s infinite normal none;
     animation-play-state: paused;
 
-}
-.search.animate
-{
-    animation-play-state: running;
 }
 
 .search-form

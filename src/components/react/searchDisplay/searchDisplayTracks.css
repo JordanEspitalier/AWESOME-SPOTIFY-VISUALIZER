@@ -9,7 +9,10 @@
 .searchDisplayTracks-header
 {
     height: 50px;
-    border-bottom: 1px solid white;
+    position: sticky;
+    background-color: rgb(30, 30, 30);
+    z-index: 1;
+    top: 0;
 }
 
 .searchDisplayTracks-body
@@ -20,7 +23,7 @@
 @media (max-width : 1880px) {
     .searchDisplayPlaylists
     {
-        grid-template-columns: repeat(6, 1fr);
+
     }
 }
 

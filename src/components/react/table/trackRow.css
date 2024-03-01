@@ -1,0 +1,9 @@
+.trackRow
+{
+    height: 50px;
+}
+
+.trackRow:hover
+{
+    background-color: rgba(41, 41, 41, 1);
+}

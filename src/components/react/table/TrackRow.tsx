@@ -1,10 +1,10 @@
-
+import './trackRow.css'
 
 export default function TrackRow ({track, tableIndex} : any) 
 {
 
     return(
-        <tr>
+        <tr className="trackRow">
             <th scope="row">{tableIndex}</th>
             <td>{track.name}</td>
             <td>{track.album.name}</td>
