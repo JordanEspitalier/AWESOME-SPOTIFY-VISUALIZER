@@ -8,7 +8,6 @@ import TrackRow from '../table/TrackRow'
 function SearchDisplayTracks() {
 
     const [tracks, setTracks] = useState<any>()
-    //console.log(scroll)
     const {query} = useParams()
     useEffect(()=>
     {
@@ -22,16 +21,16 @@ function SearchDisplayTracks() {
     },[query])
   return (
     <table className="searchDisplayTracks">
-        <thead className= "searchDisplayTracks-header">
+    { tracks && <thead className= "searchDisplayTracks-header">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Album</th>
                 <th scope="col">Time</th>
             </tr>
-        </thead>
+        </thead>}
             <tbody className='searchDisplayTracks-body'>
-                {tracks && tracks.map((track : any, index : any)=><TrackRow track={track} tableIndex={index + 1}/>)}
+                {tracks && tracks.map((track : any, index : any)=><TrackRow Key={index} track={track} tableIndex={index + 1}/>)}
             </tbody>
     </table>
   )

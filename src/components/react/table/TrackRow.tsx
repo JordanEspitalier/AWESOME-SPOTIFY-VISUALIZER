@@ -1,14 +1,42 @@
+import { useState } from 'react'
 import './trackRow.css'
 
 export default function TrackRow ({track, tableIndex} : any) 
 {
+    console.log(track)
+    const displayArtists = () =>
+    {
+        let artists: any[] = []
+        track.artists.map((artist : any) => artists.push(artist.name))
+        return <div>{artists.join(', ')}</div>
+    } 
+    const displayDuration = () =>
+    {
+        const time = (Math.round(track.duration_ms / 60000 * 100)).toString()
+        return time.slice(0, 1) + ':' + time.slice(1, 3)
+    }
+
+    const [playButtonHovered, setPlayButtonHovered] = useState(false)
 
     return(
         <tr className="trackRow">
-            <th scope="row">{tableIndex}</th>
-            <td>{track.name}</td>
+            <th 
+                scope="row"
+                className="trackRow-playIndex"
+                onMouseEnter={()=>setPlayButtonHovered(!playButtonHovered)}
+                onMouseLeave={()=>setPlayButtonHovered(!playButtonHovered)}
+            >
+                {playButtonHovered ? 'p' : tableIndex}
+            </th>
+            <td className="trackRow-main">
+                {track.album.images ?  <img src={track.album.images[track.album.images.length - 1].url} className="trackRow-main-img"/>  : <div></div>}
+                <div>
+                    <div>{track.name}</div>
+                    {displayArtists()}
+                </div>
+            </td>
             <td>{track.album.name}</td>
-            <td>{(Math.round(track.duration_ms / 60000 * 100) / 100).toString().replace('.', ':')}</td>
+            <td>{displayDuration()}</td>
         </tr>
     )
 }

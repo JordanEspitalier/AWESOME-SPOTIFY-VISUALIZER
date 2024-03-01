@@ -1,9 +1,27 @@
 .trackRow
 {
-    height: 50px;
+    height: 60px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .trackRow:hover
 {
     background-color: rgba(41, 41, 41, 1);
+}
+.trackRow-playIndex
+{
+    cursor: pointer;
+}
+.trackRow-main
+{
+    height: 50px;
+    display : flex;
+    align-items: center;
+    gap: 15px;
+}
+.trackRow-main-img
+{
+    height: 40px;
+    border-radius: 5px;
 }
