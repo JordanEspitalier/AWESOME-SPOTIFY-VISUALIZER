@@ -2,14 +2,17 @@ import { useEffect, useMemo, useState } from 'react'
 import './audioPlayer.css'
 //import { getPlaybackState } from '../../services/apiRequest/player'
 import SpotifyWebPlayer from 'react-spotify-web-playback'
-import { currentToken } from '../../services/auth'
+import { currentToken, refreshToken } from '../../services/auth'
 import { usePlayerStore } from '../../store/player'
+import { useExperienceStore } from '../../store/experience'
+import { getTrackAudioAnalysis } from '../../services/apiRequest/track'
 
 export default function AudioPlayer () 
 {
     const trackUris = usePlayerStore(state => state.trackUris)
-    console.log(trackUris)
     const [play, setPlay] = useState<boolean>(false)
+    const setCurrentTrackData = useExperienceStore(state => state.setCurrentTrackData)
+    
     useEffect(()=>
     {
         setPlay(true)
@@ -17,11 +20,18 @@ export default function AudioPlayer ()
     return (
         <div className='audioPlayer'>
             <SpotifyWebPlayer 
-                token={currentToken.access_token ? currentToken.access_token  : ''} 
+                token={currentToken.access_token ? currentToken.access_token  : ''}
                 uris={trackUris}
                 showSaveIcon
+                hideAttribution = {true}
                 callback={state => {
-                    if(!state.isPlaying) setPlay(false)
+                    if(!state.isPlaying){
+                        setPlay(false)
+                        setCurrentTrackData({curentTrackTempo : 0, currentTrackLoudness : 0})
+                    }else{
+                        if(state.track.id)
+                            getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({curentTrackTempo : data.track.tempo, currentTrackLoudness : data.track.loudness}))
+                    }
                 }}
                 play={play}
                 styles={{
