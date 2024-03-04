@@ -30,7 +30,7 @@ function SearchDisplayTracks() {
             </tr>
         </thead>}
             <tbody className='searchDisplayTracks-body'>
-                {tracks && tracks.map((track : any, index : any)=><TrackRow Key={index} track={track} tableIndex={index + 1}/>)}
+                {tracks && tracks.map((track : any, index : any)=><TrackRow key={index} track={track} tableIndex={index + 1}/>)}
             </tbody>
     </table>
   )
