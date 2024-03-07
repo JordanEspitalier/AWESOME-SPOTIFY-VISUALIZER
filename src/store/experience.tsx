@@ -3,15 +3,19 @@ import { UserProfile } from "../models/UserProfile"
 
 interface ExperienceState 
 {
-    curentTrackTempo : number,
+    currentTrackTempo : number,
     currentTrackLoudness : number,
-    setCurrentTrackData : (data : {curentTrackTempo : number, currentTrackLoudness : number}) => void
+    currentTrackDuration : number,
+    currentTrackSegments : [][]
+    setCurrentTrackData : (data : {currentTrackDuration : number, currentTrackSegments : [][]}) => void
 }
 export const useExperienceStore = create<ExperienceState>((set)=>
 ({
 
-    curentTrackTempo : 0,
+    currentTrackTempo : 0,
     currentTrackLoudness : 0,
-    setCurrentTrackData: (data) => { set({curentTrackTempo : data.curentTrackTempo, currentTrackLoudness : data.currentTrackLoudness}) }
+    currentTrackDuration : 0,
+    currentTrackSegments : [],
+    setCurrentTrackData: (data) => { set({currentTrackDuration : data.currentTrackDuration, currentTrackSegments: data.currentTrackSegments}) }
 
 }))

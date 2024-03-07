@@ -7,6 +7,8 @@ import { usePlayerStore } from '../../store/player'
 import { useExperienceStore } from '../../store/experience'
 import { getTrackAudioAnalysis } from '../../services/apiRequest/track'
 
+
+
 export default function AudioPlayer () 
 {
     const trackUris = usePlayerStore(state => state.trackUris)
@@ -27,10 +29,10 @@ export default function AudioPlayer ()
                 callback={state => {
                     if(!state.isPlaying){
                         setPlay(false)
-                        setCurrentTrackData({curentTrackTempo : 0, currentTrackLoudness : 0})
+                        setCurrentTrackData({currentTrackDuration : 0, currentTrackSegments : []})
                     }else{
                         if(state.track.id)
-                            getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({curentTrackTempo : data.track.tempo, currentTrackLoudness : data.track.loudness}))
+                            getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({currentTrackDuration : data.track.duration, currentTrackSegments : data.segments}))
                     }
                 }}
                 play={play}
