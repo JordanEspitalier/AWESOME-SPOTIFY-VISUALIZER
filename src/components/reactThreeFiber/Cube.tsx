@@ -1,6 +1,5 @@
 
 import { useExperienceStore } from "../../store/experience"
-import { Mesh } from "three"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import visualizerFragmentShader from './shaders/fragment.glsl'
