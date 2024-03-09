@@ -57,25 +57,30 @@ const visualiserMaterial = new THREE.ShaderMaterial(
         fragmentShader : visualizerFragmentShader,
         vertexShader : visualizerVertexShader,
         side : THREE.DoubleSide,
-        wireframe : true,
+        wireframe : false,
         uniforms : 
         {
+            uTime : new THREE.Uniform(0),
             uPitches : new THREE.Uniform([0.0, 0.5, 0.6, 0.7, 0.1, 0, 0.7, 0.35, 0, 0.3, 0.1, 1.0]),
-            uLoudness : new THREE.Uniform(0)
+            uLoudness : new THREE.Uniform(0),
+            uDepthColor : { value : new THREE.Color('#0e68a0') },
+            uSurfaceColor : { value : new THREE.Color('#afaff8') },
+            uColorOffset : {value : - 3},
+            uColorMultiplier : {value : 1},
         }
     },
 
 )
 
 
-const geometry = new THREE.PlaneGeometry(10, 4, 32, 16)
+const geometry = new THREE.PlaneGeometry(10, 4, 64, 32)
 
 
 export default function Cube() {
 
     const currentTrackDuration = useExperienceStore(state => state.currentTrackDuration)
     const currentTrackSegments = useExperienceStore(state => state.currentTrackSegments)
-    console.log(currentTrackSegments)
+    //console.log(currentTrackSegments)
 
 
     useFrame((state, delta)=>
@@ -94,8 +99,9 @@ export default function Cube() {
 
 
                     visualiserMaterial.uniforms.uPitches.value = data.pitches
-                    console.log(data)
                     visualiserMaterial.uniforms.uLoudness.value = data.loudness
+                    visualiserMaterial.uniforms.uTime.value = state.clock.elapsedTime
+
                 
             }
         }
