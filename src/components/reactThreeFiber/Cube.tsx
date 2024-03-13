@@ -2,8 +2,8 @@
 import { useExperienceStore } from "../../store/experience"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
-import visualizerFragmentShader from './shaders/fragment.glsl'
-import visualizerVertexShader from './shaders/vertex.glsl'
+import visualizerFragmentShader from './shaders/water/fragment.glsl'
+import visualizerVertexShader from './shaders/water/vertex.glsl'
 
 
 
@@ -63,17 +63,26 @@ const visualiserMaterial = new THREE.ShaderMaterial(
             uTime : new THREE.Uniform(0),
             uPitches : new THREE.Uniform([0.0, 0.5, 0.6, 0.7, 0.1, 0, 0.7, 0.35, 0, 0.3, 0.1, 1.0]),
             uLoudness : new THREE.Uniform(0),
-            uDepthColor : { value : new THREE.Color('#0e68a0') },
-            uSurfaceColor : { value : new THREE.Color('#afaff8') },
-            uColorOffset : {value : - 3},
-            uColorMultiplier : {value : 1},
+            uBigWavesElevation: { value: 0.2 },
+            uBigWavesFrequency: { value: new THREE.Vector2(4, 1.5) },
+            uBigWavesSpeed: { value: 0.75 },
+    
+            uSmallWavesElevation: { value: 0.15 },
+            uSmallWavesFrequency: { value: 3 },
+            uSmallWavesSpeed: { value: 0.2 },
+            uSmallIterations: { value: 2 },
+    
+            uDepthColor: { value: new THREE.Color('#ff4000') },
+            uSurfaceColor: { value: new THREE.Color('#151c37') },
+            uColorOffset: { value: 0.925 },
+            uColorMultiplier: { value: 1 }
         }
     },
 
 )
 
 
-const geometry = new THREE.PlaneGeometry(10, 4, 64, 32)
+const geometry = new THREE.PlaneGeometry(2, 2, 256, 256)
 
 
 export default function Cube() {
@@ -86,6 +95,7 @@ export default function Cube() {
     useFrame((state, delta)=>
     {
         let currentPercentage
+        visualiserMaterial.uniforms.uTime.value = state.clock.elapsedTime
         if(slider[0]) currentPercentage = slider[0].getAttribute('data-position')
 
         if(typeof(currentPercentage) === 'string' && currentPercentage != null)
@@ -100,7 +110,7 @@ export default function Cube() {
 
                     visualiserMaterial.uniforms.uPitches.value = data.pitches
                     visualiserMaterial.uniforms.uLoudness.value = data.loudness
-                    visualiserMaterial.uniforms.uTime.value = state.clock.elapsedTime
+                    
 
                 
             }

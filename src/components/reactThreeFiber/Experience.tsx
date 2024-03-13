@@ -9,7 +9,16 @@ export default function Experience ()
 
 
     return (
-        <Canvas className="experience">
+        <Canvas 
+            className="experience"
+            camera={
+                {
+                    fov : 75,
+                    near: 0.1,
+                    far : 20,
+                    position : [1, 1, 1]
+                }}
+        >
             <Perf position="top-right"/>
             <OrbitControls makeDefault/>
             <Cube />
