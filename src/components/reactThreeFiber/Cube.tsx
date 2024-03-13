@@ -8,9 +8,9 @@ import { useControls } from 'leva'
 
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
-function lerp(a:any, b:any, t:any) {
+function lerp(a:any, b:any, t:any, elapsedTime : any) {
     //return a
-    return a + (b - a) * t;
+    return (a + (b - a) * t) ;
 }
 function remapValue(number:any, originalMin:any, originalMax:any, newMin:any, newMax:any) {
     const percentage = (number - originalMin) / (originalMax - originalMin);
@@ -31,18 +31,13 @@ function findDataForTime(time:any, segments:any) {
             
             const data : any= {
                 pitches : [],
+                nextPitches : [],
                 loudness : remapValue(parseInt(segments[i].loudness_start), -60, 0, 0, 1) 
             }
 
-            // Perform linear interpolation for each pitch value
-            for (let j = 0; j < segment.pitches.length; j++) {
-                //const interpolatedTimbreValue = lerp(segment.timbre[j], nextSegment.timbre[j], segmentTime);
-                //data.timbres.push(interpolatedTimbreValue);
-                const interpolatedPitchValue = lerp(segment.pitches[j], nextSegment.pitches[j], 1.0);
-                data.pitches.push(interpolatedPitchValue);
-            }
-            
-            return data;
+            data.pitches = segment.pitches
+            data.nextPitches = nextSegment.pitches
+            return data
         }
     }
     return null; // Return null if no timbre data found for the given time
@@ -170,13 +165,15 @@ export default function Cube() {
             //console.log(currentTime)
             if(data)
             {
+                    const pitches = []
+                    for (let j = 0; j < data.pitches.length; j++) {
+                        const interpolatedPitchValue = lerp(data.pitches[j], data.nextPitches[j], 0.5, state.clock.elapsedTime);
+                        pitches.push(interpolatedPitchValue);
+                    }
 
-
-                    visualiserMaterial.uniforms.uPitches.value = data.pitches
+                    visualiserMaterial.uniforms.uPitches.value = pitches
                     visualiserMaterial.uniforms.uLoudness.value = data.loudness
                     
-
-                
             }
         }
 
