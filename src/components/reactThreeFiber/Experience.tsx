@@ -13,10 +13,10 @@ export default function Experience ()
             className="experience"
             camera={
                 {
-                    fov : 75,
+                    fov : 90,
                     near: 0.1,
-                    far : 20,
-                    position : [1, 1, 1]
+                    far : 15,
+                    position : [1, 0.5, 1],
                 }}
         >
             <Perf position="bottom-left"/>

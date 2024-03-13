@@ -27,7 +27,7 @@ void main()
         viewDirection,          // View direction
         30.0,                   // Specular power
         vPosition,              // Position
-        0.7                    // Decay
+        0.6                    // Decay
     );
 
     // Base color

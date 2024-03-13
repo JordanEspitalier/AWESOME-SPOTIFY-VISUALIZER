@@ -7,7 +7,7 @@ interface ExperienceState
     currentTrackLoudness : number,
     currentTrackDuration : number,
     currentTrackSegments : [][]
-    setCurrentTrackData : (data : {currentTrackDuration : number, currentTrackSegments : [][]}) => void
+    setCurrentTrackData : (data : {currentTrackDuration : number, currentTrackSegments : [][], currentTrackTempo : number}) => void
 }
 export const useExperienceStore = create<ExperienceState>((set)=>
 ({
@@ -16,6 +16,6 @@ export const useExperienceStore = create<ExperienceState>((set)=>
     currentTrackLoudness : 0,
     currentTrackDuration : 0,
     currentTrackSegments : [],
-    setCurrentTrackData: (data) => { set({currentTrackDuration : data.currentTrackDuration, currentTrackSegments: data.currentTrackSegments}) }
+    setCurrentTrackData: (data) => { set({currentTrackDuration : data.currentTrackDuration, currentTrackSegments: data.currentTrackSegments, currentTrackTempo : data.currentTrackTempo}) }
 
 }))

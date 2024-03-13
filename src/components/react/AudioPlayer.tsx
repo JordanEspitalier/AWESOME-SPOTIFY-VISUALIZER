@@ -29,10 +29,10 @@ export default function AudioPlayer ()
                 callback={state => {
                     if(!state.isPlaying){
                         setPlay(false)
-                        setCurrentTrackData({currentTrackDuration : 0, currentTrackSegments : []})
+                        setCurrentTrackData({currentTrackDuration : 0, currentTrackSegments : [], currentTrackTempo : 0})
                     }else{
                         if(state.track.id)
-                            getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({currentTrackDuration : data.track.duration, currentTrackSegments : data.segments}))
+                            getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({currentTrackDuration : data.track.duration, currentTrackSegments : data.segments, currentTrackTempo : data.track.tempo}))
                     }
                 }}
                 play={play}

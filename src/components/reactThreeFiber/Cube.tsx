@@ -5,10 +5,11 @@ import * as THREE from 'three'
 import visualizerFragmentShader from './shaders/water/fragment.glsl'
 import visualizerVertexShader from './shaders/water/vertex.glsl'
 import { useControls } from 'leva'
+import { useState } from "react"
 
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
-function lerp(a:any, b:any, t:any, elapsedTime : any) {
+function lerp(a:any, b:any, t:any) {
     //return a
     return (a + (b - a) * t) ;
 }
@@ -77,14 +78,15 @@ const visualiserMaterial = new THREE.ShaderMaterial(
 )
 
 
-const geometry = new THREE.PlaneGeometry(2, 2, 512, 512)
+const geometry = new THREE.PlaneGeometry(2.5, 2.5, 512, 512)
 
 
 export default function Cube() {
 
     const currentTrackDuration = useExperienceStore(state => state.currentTrackDuration)
     const currentTrackSegments = useExperienceStore(state => state.currentTrackSegments)
-    //console.log(currentTrackSegments)
+
+
     const controls = useControls({
         uBigWavesElevation : 
         {
@@ -151,6 +153,34 @@ export default function Cube() {
     visualiserMaterial.uniforms.uSmallWavesSpeed.value = controls.uSmallWavesSpeed
     visualiserMaterial.uniforms.uSmallIterations.value = controls.uSmallIterations
 
+    const currentTrackTempo = useExperienceStore(state => state.currentTrackTempo)
+    // Calculate the timing interval in seconds
+    const timmingInterval = 60 / currentTrackTempo
+    // Track elapsed time
+    const [trackElapsedTime, setTrackElapsedTime] = useState(0)
+
+    const updateTrackElapsedTime = (deltaTime : any, data : any) => {
+        // Increment elapsed time by the time passed since the last update
+        setTrackElapsedTime(trackElapsedTime + deltaTime)
+
+        // Check if a beat has occurred (elapsed time is a multiple of timing interval)
+        if(trackElapsedTime >= timmingInterval) {
+            // Trigger data sending to shaders
+            const pitches = []
+            for (let j = 0; j < data.pitches.length; j++) {
+                // Lerp with the next pitch to avoid too brutal transition
+                const interpolatedPitchValue = lerp(data.pitches[j], data.nextPitches[j], 0.5);
+                pitches.push(interpolatedPitchValue);
+            }
+            // Update uniforms values
+            visualiserMaterial.uniforms.uPitches.value = pitches
+            visualiserMaterial.uniforms.uLoudness.value = data.loudness
+
+            // Subtract timing interval from elapsed time to keep it in sync with the next beat
+            setTrackElapsedTime(trackElapsedTime - timmingInterval)
+        }
+    }
+
     useFrame((state, delta)=>
     {
         let currentPercentage
@@ -165,18 +195,14 @@ export default function Cube() {
             //console.log(currentTime)
             if(data)
             {
-                    const pitches = []
-                    for (let j = 0; j < data.pitches.length; j++) {
-                        const interpolatedPitchValue = lerp(data.pitches[j], data.nextPitches[j], 0.5, state.clock.elapsedTime);
-                        pitches.push(interpolatedPitchValue);
-                    }
-
-                    visualiserMaterial.uniforms.uPitches.value = pitches
-                    visualiserMaterial.uniforms.uLoudness.value = data.loudness
-                    
+                updateTrackElapsedTime(delta, data)
             }
         }
 
+        // Camera rotation
+        state.camera.lookAt(new THREE.Vector3(0, -0.6, 0))
+        state.camera.position.x = Math.sin(state.clock.elapsedTime * 0.2)
+        state.camera.position.z = Math.cos(state.clock.elapsedTime * 0.2)
         
     })
 
