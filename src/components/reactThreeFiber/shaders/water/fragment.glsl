@@ -21,13 +21,13 @@ void main()
 
     light += pointLight(
         vec3(1.0),              // Light color
-        10.0,                    // Light intensity
+        30.0,                    // Light intensity
         normal,                 // Normal
-        vec3(0.0, 0.25, 0.0),   // Light position
+        vec3(0.0, 1.0, 0.0),   // Light position
         viewDirection,          // View direction
         30.0,                   // Specular power
         vPosition,              // Position
-        0.95                    // Decay
+        0.7                    // Decay
     );
 
     // Base color

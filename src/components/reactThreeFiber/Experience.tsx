@@ -19,7 +19,7 @@ export default function Experience ()
                     position : [1, 1, 1]
                 }}
         >
-            <Perf position="top-right"/>
+            <Perf position="bottom-left"/>
             <OrbitControls makeDefault/>
             <Cube />
         </Canvas>

@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import visualizerFragmentShader from './shaders/water/fragment.glsl'
 import visualizerVertexShader from './shaders/water/vertex.glsl'
-
+import { useControls } from 'leva'
 
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
@@ -38,7 +38,7 @@ function findDataForTime(time:any, segments:any) {
             for (let j = 0; j < segment.pitches.length; j++) {
                 //const interpolatedTimbreValue = lerp(segment.timbre[j], nextSegment.timbre[j], segmentTime);
                 //data.timbres.push(interpolatedTimbreValue);
-                const interpolatedPitchValue = lerp(segment.pitches[j], nextSegment.pitches[j], segmentTime);
+                const interpolatedPitchValue = lerp(segment.pitches[j], nextSegment.pitches[j], 1.0);
                 data.pitches.push(interpolatedPitchValue);
             }
             
@@ -82,7 +82,7 @@ const visualiserMaterial = new THREE.ShaderMaterial(
 )
 
 
-const geometry = new THREE.PlaneGeometry(2, 2, 256, 256)
+const geometry = new THREE.PlaneGeometry(2, 2, 512, 512)
 
 
 export default function Cube() {
@@ -90,7 +90,71 @@ export default function Cube() {
     const currentTrackDuration = useExperienceStore(state => state.currentTrackDuration)
     const currentTrackSegments = useExperienceStore(state => state.currentTrackSegments)
     //console.log(currentTrackSegments)
-
+    const controls = useControls({
+        uBigWavesElevation : 
+        {
+            value : 0.2,
+            min : 0,
+            max : 1,
+            step : 0.01
+        },
+        uBigWavesFrequencyX : 
+        {
+            value : 4,
+            min : 0,
+            max : 10,
+            step : 0.01
+        },
+        uBigWavesFrequencyY : 
+        {
+            value : 1.5,
+            min : 0,
+            max : 10,
+            step : 0.01
+        },
+        uBigWavesSpeed : 
+        {
+            value : 0.75,
+            min : 0,
+            max : 4,
+            step : 0.01
+        },
+        uSmallWavesElevation : 
+        {
+            value : 0.15,
+            min : 0,
+            max : 1,
+            step : 0.01
+        },
+        uSmallWavesFrequency : 
+        {
+            value : 3,
+            min : 0,
+            max : 30,
+            step : 0.01
+        },
+        uSmallWavesSpeed : 
+        {
+            value : 0.2,
+            min : 0,
+            max : 4,
+            step : 0.01
+        },
+        uSmallIterations : 
+        {
+            value : 2,
+            min : 0,
+            max : 4,
+            step : 1
+        },
+    })
+    visualiserMaterial.uniforms.uBigWavesElevation.value = controls.uBigWavesElevation
+    visualiserMaterial.uniforms.uBigWavesFrequency.value = new THREE.Vector2(controls.uBigWavesFrequencyX, controls.uBigWavesFrequencyY)
+    visualiserMaterial.uniforms.uBigWavesSpeed.value = controls.uBigWavesSpeed
+    visualiserMaterial.uniforms.uSmallWavesElevation.value = controls.uSmallWavesElevation
+    visualiserMaterial.uniforms.uSmallWavesFrequency.value = controls.uSmallWavesFrequency
+    visualiserMaterial.uniforms.uSmallWavesSpeed.value = controls.uSmallWavesSpeed
+    visualiserMaterial.uniforms.uSmallIterations.value = controls.uSmallIterations
 
     useFrame((state, delta)=>
     {
