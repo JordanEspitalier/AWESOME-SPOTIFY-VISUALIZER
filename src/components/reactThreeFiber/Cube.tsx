@@ -9,26 +9,22 @@ import { useState } from "react"
 
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
+
 function lerp(a:any, b:any, t:any) {
-    //return a
+
     return (a + (b - a) * t) ;
 }
 function remapValue(number:any, originalMin:any, originalMax:any, newMin:any, newMax:any) {
     const percentage = (number - originalMin) / (originalMax - originalMin);
     return newMin + (newMax - newMin) * percentage;
 }
-function findDataForTime(time:any, segments:any) {
-    // Iterate through each segment
-    for (let i = 0; i < segments.length - 1; i++) {
+function findDataForTime(time:any, segments:any, iterationPassed : number, setIterationPassed : any) {
+    // Iterate through each segment, start where the last loop stop to increase perfs
+    for (let i = 0 + iterationPassed; i < segments.length - 1; i++) {
         const segment = segments[i];
         const nextSegment = segments[i + 1];
-        
         // Check if the current segment contains the time
         if (segment.start <= time && nextSegment.start >= time) {
-            // Interpolate the timbre values
-            const segmentTime = (time - segment.start) / segment.duration; // Interpolation factor for current segment
-            //console.log(segmentTime)
-            //const nextSegmentTime = (time - nextSegment.start) / nextSegment.duration; // Interpolation factor for next segment
             
             const data : any= {
                 pitches : [],
@@ -38,15 +34,13 @@ function findDataForTime(time:any, segments:any) {
 
             data.pitches = segment.pitches
             data.nextPitches = nextSegment.pitches
+            setIterationPassed(i)
             return data
         }
     }
-    return null; // Return null if no timbre data found for the given time
+    return null; // Return null if no data found for the given time
 }
 
-
-
-//             uPitches : new THREE.Uniform([0.2, 1, 0.4, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 const visualiserMaterial = new THREE.ShaderMaterial(
     {
@@ -111,7 +105,7 @@ export default function Cube() {
         },
         uBigWavesSpeed : 
         {
-            value : 0.75,
+            value : 0.5,
             min : 0,
             max : 4,
             step : 0.01
@@ -125,7 +119,7 @@ export default function Cube() {
         },
         uSmallWavesFrequency : 
         {
-            value : 3,
+            value : 1.5,
             min : 0,
             max : 30,
             step : 0.01
@@ -139,7 +133,7 @@ export default function Cube() {
         },
         uSmallIterations : 
         {
-            value : 2,
+            value : 3,
             min : 0,
             max : 4,
             step : 1
@@ -154,60 +148,53 @@ export default function Cube() {
     visualiserMaterial.uniforms.uSmallIterations.value = controls.uSmallIterations
 
     const currentTrackTempo = useExperienceStore(state => state.currentTrackTempo)
-    // Calculate the timing interval in seconds
-    const timmingInterval = 60 / currentTrackTempo
+    // Calculate the timing interval in seconds (60 mean each 4 time per musure * 2 : 2 time and * 4 1 time)
+    const timmingInterval = 60 * 2 / currentTrackTempo
     // Track elapsed time
     const [trackElapsedTime, setTrackElapsedTime] = useState(0)
 
-    const updateTrackElapsedTime = (deltaTime : any, data : any) => {
+    const updateTrackElapsedTimeAndSendDataToShaders = (deltaTime : any, data : any, shaderMaterial : any) => {
         // Increment elapsed time by the time passed since the last update
         setTrackElapsedTime(trackElapsedTime + deltaTime)
 
         // Check if a beat has occurred (elapsed time is a multiple of timing interval)
+
         if(trackElapsedTime >= timmingInterval) {
             // Trigger data sending to shaders
-            const pitches = []
-            for (let j = 0; j < data.pitches.length; j++) {
-                // Lerp with the next pitch to avoid too brutal transition
-                const interpolatedPitchValue = lerp(data.pitches[j], data.nextPitches[j], 0.5);
-                pitches.push(interpolatedPitchValue);
-            }
-            // Update uniforms values
-            visualiserMaterial.uniforms.uPitches.value = pitches
-            visualiserMaterial.uniforms.uLoudness.value = data.loudness
+            shaderMaterial.uniforms.uPitches.value = data.pitches
+            shaderMaterial.uniforms.uLoudness.value = data.loudness
 
             // Subtract timing interval from elapsed time to keep it in sync with the next beat
             setTrackElapsedTime(trackElapsedTime - timmingInterval)
+
         }
     }
+
+    const [iterationPassed, setIterationPassed] = useState(0)
 
     useFrame((state, delta)=>
     {
         let currentPercentage
         visualiserMaterial.uniforms.uTime.value = state.clock.elapsedTime
+        // Get percentage of the track if there is the audioPlayer running
         if(slider[0]) currentPercentage = slider[0].getAttribute('data-position')
 
         if(typeof(currentPercentage) === 'string' && currentPercentage != null)
         {
+            // Get the current time in second
             const currentTime = parseFloat(currentPercentage)  * currentTrackDuration / 100
-            const data = findDataForTime(currentTime, currentTrackSegments)
-            //console.log(data)
-            //console.log(currentTime)
-            if(data)
-            {
-                updateTrackElapsedTime(delta, data)
-            }
+            // Find data relaite to the actual time of the music
+            const data = findDataForTime(currentTime, currentTrackSegments, iterationPassed, setIterationPassed)
+            // If there is data trigger the data sending to the shaders according to the tempo
+            if(data) updateTrackElapsedTimeAndSendDataToShaders(delta, data, visualiserMaterial)
+            
         }
 
         // Camera rotation
         state.camera.lookAt(new THREE.Vector3(0, -0.6, 0))
         state.camera.position.x = Math.sin(state.clock.elapsedTime * 0.2)
         state.camera.position.z = Math.cos(state.clock.elapsedTime * 0.2)
-        
     })
-
-
-
 
   return (
     <>

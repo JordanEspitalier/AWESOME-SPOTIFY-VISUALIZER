@@ -7,7 +7,6 @@ export const getTrackAudioAnalysis = async (id : string) =>
     const headers = {Authorization : `Bearer ${currentToken.access_token}`}
     try {        
         const {data} = await axios.get<any>(`${API_BASE_URI}audio-analysis/${id}`, { headers })
-        console.log(data)
         return data
 
     } catch (error : any) {
