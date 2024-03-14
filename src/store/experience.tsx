@@ -6,8 +6,14 @@ interface ExperienceState
     currentTrackTempo : number,
     currentTrackLoudness : number,
     currentTrackDuration : number,
-    currentTrackSegments : [][]
-    setCurrentTrackData : (data : {currentTrackDuration : number, currentTrackSegments : [][], currentTrackTempo : number}) => void
+    currentTrackSegments : [][],
+    triggerResetLoopIndex  : number,
+    setCurrentTrackData : (data : {
+        currentTrackDuration : number,
+        currentTrackSegments : [][],
+        currentTrackTempo : number,
+    }) => void,
+    resetLoopIndex : () => void
 }
 export const useExperienceStore = create<ExperienceState>((set)=>
 ({
@@ -16,6 +22,12 @@ export const useExperienceStore = create<ExperienceState>((set)=>
     currentTrackLoudness : 0,
     currentTrackDuration : 0,
     currentTrackSegments : [],
-    setCurrentTrackData: (data) => { set({currentTrackDuration : data.currentTrackDuration, currentTrackSegments: data.currentTrackSegments, currentTrackTempo : data.currentTrackTempo}) }
+    triggerResetLoopIndex : 0,
+    setCurrentTrackData: (data) => { set({
+        currentTrackDuration : data.currentTrackDuration,
+        currentTrackSegments: data.currentTrackSegments,
+        currentTrackTempo : data.currentTrackTempo,
+    }) },
+    resetLoopIndex : () => {set(state =>({triggerResetLoopIndex : state.triggerResetLoopIndex + 1}))}
 
 }))

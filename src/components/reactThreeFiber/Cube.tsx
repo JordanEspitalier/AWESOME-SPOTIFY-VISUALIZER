@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import visualizerFragmentShader from './shaders/water/fragment.glsl'
 import visualizerVertexShader from './shaders/water/vertex.glsl'
 import { useControls } from 'leva'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
@@ -79,6 +79,8 @@ export default function Cube() {
 
     const currentTrackDuration = useExperienceStore(state => state.currentTrackDuration)
     const currentTrackSegments = useExperienceStore(state => state.currentTrackSegments)
+    // listen to change on triggerResetLoopIndex to reset the index of the loop findDataForTime
+    const triggerResetLoopIndex = useExperienceStore(state => state.triggerResetLoopIndex)
 
 
     const controls = useControls({
@@ -171,6 +173,11 @@ export default function Cube() {
     }
 
     const [iterationPassed, setIterationPassed] = useState(0)
+
+    useEffect(()=>
+    {
+        setIterationPassed(0)
+    }, [triggerResetLoopIndex])
 
     useFrame((state, delta)=>
     {

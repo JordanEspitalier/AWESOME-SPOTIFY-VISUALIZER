@@ -18,15 +18,15 @@ varying vec3 vPosition;
 
 float waveElevation(vec3 position)
 {
-    float elevation = sin( position.x * uBigWavesFrequency.x * (uPitches[3] + uPitches[4] + uPitches[5]) + uTime * uBigWavesSpeed) *
+    float elevation = sin(position.x * uBigWavesFrequency.x * (uPitches[3] + uPitches[4] + uPitches[5]) + uTime * uBigWavesSpeed) *
                     sin(position.z * uBigWavesFrequency.y * (uPitches[0] + uPitches[1] + uPitches[2]) + uTime * uBigWavesSpeed) *
                     uBigWavesElevation;
 
     for(float i = 1.0; i <= uSmallIterations; i++)
     {
-               elevation -= abs(perlinClassic3D(vec3(position.xz * uSmallWavesFrequency * (uPitches[6] + uPitches[7] + uPitches[8]) * i, uTime * uSmallWavesSpeed * (uPitches[9] + uPitches[10] + uPitches[11]))) * uSmallWavesElevation / i);
+               elevation -= abs(perlinClassic3D(vec3(position.xz * uSmallWavesFrequency * (max(0.4, uPitches[9] + uPitches[10] + uPitches[11])) * i, uTime * uSmallWavesSpeed * (uPitches[6] + uPitches[7] + uPitches[8]))) * uSmallWavesElevation / i);
     }
-
+    //elevation *= uLoudness * abs((sin(uTime + uLoudness)) - 0.5) + 0.5 * abs((sin((uTime * uLoudness) + uTime)) - 0.5) + 0.5;
     return elevation;
 }
 

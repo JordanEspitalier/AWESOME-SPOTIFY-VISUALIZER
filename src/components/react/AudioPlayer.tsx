@@ -14,6 +14,7 @@ export default function AudioPlayer ()
     const trackUris = usePlayerStore(state => state.trackUris)
     const [play, setPlay] = useState<boolean>(false)
     const setCurrentTrackData = useExperienceStore(state => state.setCurrentTrackData)
+    const resetLoopIndex = useExperienceStore(state => state.resetLoopIndex)
     
     useEffect(()=>
     {
@@ -32,6 +33,7 @@ export default function AudioPlayer ()
                         setCurrentTrackData({currentTrackDuration : 0, currentTrackSegments : [], currentTrackTempo : 0})
                     }else{
                         if(state.track.id)
+                            resetLoopIndex()
                             getTrackAudioAnalysis(state.track.id).then(data => setCurrentTrackData({currentTrackDuration : data.track.duration, currentTrackSegments : data.segments, currentTrackTempo : data.track.tempo}))
                     }
                 }}
