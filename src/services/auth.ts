@@ -1,13 +1,22 @@
 import { CLIENT_ID, REDIRECT_URI, AUTH_ENDPOINT, TOKEN_ENDPOINT, SCOPE } from "../utils/constants";
   
 // Data structure that manages the current active token, caching it in localStorage
+
+interface ApiTokenResponse {
+  access_token : string,
+  expires_in : number,
+  refresh_token : string,
+  scope : string,
+  token_type : string
+}
 export const currentToken = 
 {
     get access_token() {return localStorage.getItem('access_token') || null},
     get refresh_token() { return localStorage.getItem('refresh_token') || null; },
     get expires_in() { return localStorage.getItem('refresh_in') || null },
     get expires() { return localStorage.getItem('expires') || null },
-
+    get expires_at () { return localStorage.getItem('expires_at') || null },
+    
     save: function(response : any)
     {
         const {access_token, refresh_token, expires_in} = response
@@ -18,6 +27,7 @@ export const currentToken =
         const now = new Date()
         const expiry = new Date(now.getTime() + (expires_in * 1000)).toString()
         localStorage.setItem('expires', expiry)
+        localStorage.setItem('expires_at', (Date.now() + expires_in * 1000).toString())
     }
 }
 

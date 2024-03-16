@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './audioPlayer.css'
 //import { getPlaybackState } from '../../services/apiRequest/player'
-import SpotifyWebPlayer from 'react-spotify-web-playback'
+import SpotifyWebPlayer, { Props } from 'react-spotify-web-playback'
 import { currentToken, refreshToken } from '../../services/auth'
 import { usePlayerStore } from '../../store/player'
 import { useExperienceStore } from '../../store/experience'
@@ -15,6 +15,17 @@ export default function AudioPlayer ()
     const [play, setPlay] = useState<boolean>(false)
     const setCurrentTrackData = useExperienceStore(state => state.setCurrentTrackData)
     const resetLoopIndex = useExperienceStore(state => state.resetLoopIndex)
+
+    const getOAuthToken: Props['getOAuthToken'] = async callback => {
+        if (currentToken.expires_at != null && parseInt(currentToken.expires_at) > Date.now()) {
+            console.log('sending actual token')
+            currentToken.access_token && callback(currentToken.access_token)
+            return
+        }
+        console.log('refresh token')
+        await refreshToken()
+        currentToken.access_token && callback(currentToken.access_token)
+      }
     
     useEffect(()=>
     {
@@ -47,6 +58,7 @@ export default function AudioPlayer ()
                     sliderHandleColor: '#ffff',
                     sliderTrackColor : '#4D4C4C'
                 }}
+                getOAuthToken={getOAuthToken}
             />
         </div>
     )

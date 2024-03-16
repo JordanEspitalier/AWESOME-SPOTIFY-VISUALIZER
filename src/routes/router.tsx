@@ -6,7 +6,6 @@ import Login from "../pages/Login";
 import Search from "../pages/Search";
 import SearchDisplayAll from "../components/react/searchDisplay/SearchDisplayAll";
 import SearchDisplay from "../components/react/searchDisplay/SearchDisplay";
-import { useAuthStore } from "../store/auth";
 import { currentToken, getToken } from "../services/auth";
 
 
