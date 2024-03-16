@@ -32,9 +32,9 @@ function App() {
       url.searchParams.delete('code')
       const updatedUrl = url.search ? url.href : url.href.replace('?', '');
       window.history.replaceState({}, document.title, updatedUrl);
+
     }
     // If we have a token, we're logged in
-
     if(currentToken.access_token && currentToken.access_token!= 'undefined')
     {
       setUserIsLogged(true)
@@ -44,13 +44,13 @@ function App() {
         setCurrentUserProfile(user)
         //navigate('/')
       })
-    }
 
+    }
     // Otherwise we're not logged in
-    if (!currentToken.access_token) {
-      console.log(userIsLogged)
+    if (!currentToken.access_token || currentToken.access_token === 'undefined') {
+      console.log(currentToken.access_token)
       setUserIsLogged(false)
-      navigate('/login')
+      //navigate('/login')
 
     }
 
