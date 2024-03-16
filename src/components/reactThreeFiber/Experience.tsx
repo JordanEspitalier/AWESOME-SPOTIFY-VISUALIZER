@@ -2,7 +2,7 @@ import { OrbitControls } from '@react-three/drei'
 import './experience.css'
 import { Canvas} from '@react-three/fiber'
 import { Perf } from 'r3f-perf'
-import Cube from './Cube'
+import AudioVisualizer from './AudioVisualizer'
 
 export default function Experience () 
 {
@@ -21,7 +21,7 @@ export default function Experience ()
         >
             <Perf position="bottom-left"/>
             <OrbitControls makeDefault/>
-            <Cube />
+            <AudioVisualizer />
         </Canvas>
     )
 }

@@ -10,10 +10,6 @@ import { useEffect, useState } from "react"
 
 const slider = document.getElementsByClassName(' _SliderRSWP __1lztbt5')
 
-function lerp(a:any, b:any, t:any) {
-
-    return (a + (b - a) * t) ;
-}
 function remapValue(number:any, originalMin:any, originalMax:any, newMin:any, newMax:any) {
     const percentage = (number - originalMin) / (originalMax - originalMin);
     return newMin + (newMax - newMin) * percentage;
