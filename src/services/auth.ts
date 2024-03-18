@@ -47,7 +47,7 @@ export async function redirectToSpotifyAuthorize() {
       .replace(/\//g, '_');
   
     window.localStorage.setItem('code_verifier', code_verifier);
-  
+
     const authUrl = new URL(AUTH_ENDPOINT)
     const params = {
       response_type: 'code',

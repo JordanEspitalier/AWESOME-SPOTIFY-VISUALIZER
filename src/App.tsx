@@ -5,11 +5,12 @@ import Home from './pages/Home'
 import { useUserStore } from './store/user'
 import { currentToken, getToken } from './services/auth'
 import { getCurrentUserProfile } from './services/apiRequest/user'
+import { REDIRECT_URI } from './utils/constants'
 
 function App() {
 
   const setCurrentUserProfile = useUserStore(state => state.setCurrentUserProfile)
-
+  console.log(REDIRECT_URI)
   useEffect(()=>
   {
 
