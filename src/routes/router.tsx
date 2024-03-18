@@ -15,6 +15,7 @@ export const router = createBrowserRouter(
       path: "/",
       element: <App />,
       loader : async () => {
+        console.log(import.meta.env.PROD);
         // On page load, try to fetch auth code from current browser search URL
         const args = new URLSearchParams(window.location.search)
         const code = args.get('code')
