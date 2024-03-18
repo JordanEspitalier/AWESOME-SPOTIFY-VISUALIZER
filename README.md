@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# Awesome spotify visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Prod link : <https://awesome-spotify-visualizer.vercel.app/>
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This website is an audio visualizer working with spotify api.
+You have almost the same search pannel than spotify but insted of the spotify home page you have a 3D visualizer powered by React three fiber, and some custom shaders.
 
-## Expanding the ESLint configuration
+### Requirements
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Spotify premium account
 
-- Configure the top-level `parserOptions` property like this:
+## TODO
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+The Website is actually working, you can choose tracks and play them but there is a lot of work to do i will list them here :
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Search page :
+  - Add all page
+  - Add clickable artists on artist page
+  - Add clickable playlists on playlist page
+  - Add clickable albums on album page
+  - Add navigation when clicking on album/artist etc
+- Audio Player :
+  - Add queue tracks list
+  - Add auto play when track end (launch an other track similar to the track played)
+- Visualizer :
+  - Add other shaders with the possibility to choose a shader
+  - Add color changing sea shader
+- Global :
+  - Import Library of the user
