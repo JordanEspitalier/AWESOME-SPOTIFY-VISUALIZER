@@ -1,0 +1,49 @@
+.searchDisplayAll
+{
+    width: 100%;
+}
+
+.searchDisplayAll-tracksPreview-title, .searchDisplayAll-artistsPreview-title, .searchDisplayAll-albumsPreview-title, .searchDisplayAll-playlistsPreview-title
+{
+    font-size: 26px;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
+
+.searchDisplayAll-tracksPreview-table
+{
+    width: 100%;
+}
+
+.searchDisplayAll-tracksPreview-table-header
+{
+    height: 50px;
+    position: sticky;
+    background-color: rgb(30, 30, 30);
+    top: 0;
+    text-align: left;
+}
+
+.searchDisplayAll-tracksPreview-table-body
+{
+    width: 100%;
+}
+
+.searchDisplayAll-artistsPreview{
+
+}
+
+.searchDisplayAll-artistsPreview-container, .searchDisplayAll-albumsPreview-container, .searchDisplayAll-playlistsPreview-container
+{
+    
+    height: 100%;
+    display: grid;
+    grid-gap: 24px;
+    flex-wrap: wrap;
+    margin-right: 10px;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    padding-bottom:  30px;
+}

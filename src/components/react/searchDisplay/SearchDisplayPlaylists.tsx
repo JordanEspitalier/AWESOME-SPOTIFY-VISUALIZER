@@ -4,6 +4,7 @@ import { Key, useEffect, useState } from 'react'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
 import { useParams } from 'react-router-dom'
+import { SearchType } from '../../../models/SearchTypes'
 
 function SearchDisplayPlaylists() {
     const [playlists, setPlaylists] = useState<any>()
@@ -21,7 +22,7 @@ function SearchDisplayPlaylists() {
 
   return (
     <div className='searchDisplayPlaylists'>
-    {playlists && playlists.map((playlist: { id: Key | null | undefined }) => <Card key={playlist.id} artist={playlist}/> )}
+    {playlists && playlists.map((playlist: { id: Key | null | undefined }) => <Card key={playlist.id} item={playlist} type={SearchType.playlist}/> )}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import './searchDisplayArtists.css'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
 import { useParams } from 'react-router-dom'
+import { SearchType } from '../../../models/SearchTypes'
 
 
 function SearchDisplayArtists() {
@@ -22,7 +23,7 @@ function SearchDisplayArtists() {
 
   return (
     <div className='searchDisplayArtists'>
-    {artists && artists.map((artist: { id: Key | null | undefined }) => <Card key={artist.id} artist={artist}/> )}
+    {artists && artists.map((artist: { id: Key | null | undefined }) => <Card key={artist.id} item={artist} type={SearchType.artist}/> )}
     </div>
   )
 }

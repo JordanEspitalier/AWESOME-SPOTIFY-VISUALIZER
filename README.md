@@ -16,7 +16,6 @@ You have almost the same search pannel than spotify but insted of the spotify ho
 The Website is actually working, you can choose tracks and play them but there is a lot of work to do i will list them here :
 
 - Search page :
-  - Add all page
   - Add clickable artists on artist page
   - Add clickable playlists on playlist page
   - Add clickable albums on album page

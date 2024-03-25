@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import { SearchTypes } from "../../../models/SearchTypes"
 import SearchDisplayArtists from "./SearchDisplayArtists";
 import SearchDisplayTracks from "./SearchDisplayTracks";
 import SearchDisplayPlaylists from "./SearchDisplayPlaylists";
@@ -11,13 +10,13 @@ function SearchDisplay() {
     const display = (type?:String) =>
     {
         switch (type) {
-            case SearchTypes.artists:
+            case 'artists':
                 return <SearchDisplayArtists />
-            case SearchTypes.tracks:
+            case 'tracks':
                 return <SearchDisplayTracks />
-            case SearchTypes.playlists :
+            case 'playlists' :
                 return <SearchDisplayPlaylists />
-            case SearchTypes.albums :
+            case 'albums' :
                 return <SearchDisplayAlbums />
             default:
                 break;

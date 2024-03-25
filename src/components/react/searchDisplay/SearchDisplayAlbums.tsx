@@ -3,6 +3,7 @@ import { Key, useEffect, useState } from 'react'
 import { searchForItems } from '../../../services/apiRequest/search'
 import Card from '../cards/Card'
 import { useParams } from 'react-router-dom'
+import { SearchType } from '../../../models/SearchTypes'
 
 function SearchDisplayAlbums (){
     const [albums, setAlbums] = useState<any>()
@@ -20,7 +21,7 @@ function SearchDisplayAlbums (){
 
   return (
     <div className='searchDisplayAlbums'>
-    {albums && albums.map((album: { id: Key | null | undefined }) => <Card key={album.id} artist={album}/> )}
+    {albums && albums.map((album: { id: Key | null | undefined }) => <Card key={album.id} item={album} type={SearchType.album}/> )}
     </div>
   )
 }
