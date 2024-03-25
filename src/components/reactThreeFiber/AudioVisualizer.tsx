@@ -79,7 +79,7 @@ export default function Cube() {
     const triggerResetLoopIndex = useExperienceStore(state => state.triggerResetLoopIndex)
 
 
-    const controls = useControls({
+/*     const controls = useControls({
         uBigWavesElevation : 
         {
             value : 0.2,
@@ -143,7 +143,7 @@ export default function Cube() {
     visualiserMaterial.uniforms.uSmallWavesElevation.value = controls.uSmallWavesElevation
     visualiserMaterial.uniforms.uSmallWavesFrequency.value = controls.uSmallWavesFrequency
     visualiserMaterial.uniforms.uSmallWavesSpeed.value = controls.uSmallWavesSpeed
-    visualiserMaterial.uniforms.uSmallIterations.value = controls.uSmallIterations
+    visualiserMaterial.uniforms.uSmallIterations.value = controls.uSmallIterations */
 
     const currentTrackTempo = useExperienceStore(state => state.currentTrackTempo)
     // Calculate the timing interval in seconds (60 mean each 4 time per musure * 2 : 2 time and * 4 1 time)

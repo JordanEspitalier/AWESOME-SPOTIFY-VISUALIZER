@@ -6,7 +6,7 @@ function SearchDisplayAll() {
 
   return (
     <div className='searchDisplayAll'>
-       searchDisplayAll
+       
     </div>
   )
 }

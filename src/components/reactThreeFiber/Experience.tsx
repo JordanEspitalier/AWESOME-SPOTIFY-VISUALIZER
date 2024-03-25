@@ -19,7 +19,7 @@ export default function Experience ()
                     position : [1, 0.5, 1],
                 }}
         >
-            <Perf position="bottom-left"/>
+{/*             <Perf position="bottom-left"/> */}
             <OrbitControls makeDefault/>
             <AudioVisualizer />
         </Canvas>

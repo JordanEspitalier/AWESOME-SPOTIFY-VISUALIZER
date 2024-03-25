@@ -37,7 +37,7 @@ export default function AudioPlayer ()
                 token={currentToken.access_token ? currentToken.access_token  : ''}
                 uris={trackUris}
                 showSaveIcon
-                hideAttribution = {true}
+                hideAttribution = {false}
                 callback={state => {
                     if(!state.isPlaying){
                         setPlay(false)
@@ -59,6 +59,7 @@ export default function AudioPlayer ()
                     sliderTrackColor : '#4D4C4C'
                 }}
                 getOAuthToken={getOAuthToken}
+                initialVolume={0.5}
             />
         </div>
     )
