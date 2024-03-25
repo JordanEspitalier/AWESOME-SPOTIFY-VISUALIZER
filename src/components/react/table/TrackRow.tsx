@@ -4,7 +4,7 @@ import { usePlayerStore } from '../../../store/player'
 
 export default function TrackRow ({track, tableIndex} : any) 
 {
-    console.log(track)
+
     const displayArtists = () =>
     {
         let artists: any[] = []
