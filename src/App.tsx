@@ -10,8 +10,6 @@ import { REDIRECT_URI } from './utils/constants'
 function App() {
 
   const setCurrentUserProfile = useUserStore(state => state.setCurrentUserProfile)
-  console.log(REDIRECT_URI)
-  console.log(import.meta.env.PROD);
    import.meta.env.PROD
   useEffect(()=>
   {

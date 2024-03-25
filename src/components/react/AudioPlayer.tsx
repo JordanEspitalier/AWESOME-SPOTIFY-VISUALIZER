@@ -18,11 +18,9 @@ export default function AudioPlayer ()
 
     const getOAuthToken: Props['getOAuthToken'] = async callback => {
         if (currentToken.expires_at != null && parseInt(currentToken.expires_at) > Date.now()) {
-            console.log('sending actual token')
             currentToken.access_token && callback(currentToken.access_token)
             return
         }
-        console.log('refresh token')
         await refreshToken()
         currentToken.access_token && callback(currentToken.access_token)
       }
