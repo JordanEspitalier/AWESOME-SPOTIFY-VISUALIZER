@@ -1,4 +1,5 @@
 import {
+  Navigate,
     createBrowserRouter, redirect,
   } from "react-router-dom";
 import App from "../App";
@@ -7,6 +8,7 @@ import Search from "../pages/Search";
 import SearchDisplayAll from "../components/react/searchDisplay/SearchDisplayAll";
 import SearchDisplay from "../components/react/searchDisplay/SearchDisplay";
 import { currentToken, getToken } from "../services/auth";
+import CollectionDisplay from "../components/react/CollectionDisplay";
 
 
 export const router = createBrowserRouter(
@@ -32,7 +34,6 @@ export const router = createBrowserRouter(
 
         }
         if(!currentToken.access_token || currentToken.access_token === 'undefined'){
-          console.log('hey')
           return redirect('/login')
         } 
         return null
@@ -52,6 +53,19 @@ export const router = createBrowserRouter(
             },
           ]
         },
+        {
+          path : "collection",
+          element : <CollectionDisplay type="likedTracks"/>
+        },
+        {
+          path : "album/:id",
+          element : <CollectionDisplay type="album"/>
+        },
+        {
+          path : "playlist/:id",
+          element : <CollectionDisplay type="playlist"/>
+        },
+
       ],
       
     },

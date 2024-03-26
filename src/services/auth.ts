@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 import { CLIENT_ID, REDIRECT_URI, AUTH_ENDPOINT, TOKEN_ENDPOINT, SCOPE } from "../utils/constants";
   
 // Data structure that manages the current active token, caching it in localStorage
@@ -101,6 +102,6 @@ export async function redirectToSpotifyAuthorize() {
     })
   
     const token =  await response.json()
-    console.log(token)
+    if(token.error) return redirect('/login')
     currentToken.save(token)
   }

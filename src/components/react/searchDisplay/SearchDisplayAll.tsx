@@ -41,7 +41,7 @@ function SearchDisplayAll() {
           </tr>
         </thead>
         <tbody className='searchDisplayAll-tracksPreview-table-body'>
-          {tracks.map((track : any, index:any) => <TrackRow key={index} track={track} tableIndex={index}/>)}
+          {tracks.map((track : any, index:any) => <TrackRow key={index} track={track} tableIndex={index + 1}/>)}
         </tbody>
        </table>
       </>

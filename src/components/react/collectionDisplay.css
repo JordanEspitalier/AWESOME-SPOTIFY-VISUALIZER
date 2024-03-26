@@ -1,0 +1,31 @@
+.collectionDisplay
+{
+    width: 100%;
+    overflow: auto;
+}
+
+.collectionDisplay-header
+{
+    height: 40%;
+}
+
+.collectionDisplay-table
+{
+    width: 100%;
+    grid-gap: 24px;
+    margin-right: 10px;
+}
+
+.collectionDisplay-table-header
+{
+    height: 50px;
+    position: sticky;
+    background-color: rgb(30, 30, 30);
+    top: 0;
+    text-align: left;
+}
+
+.collectionDisplay-table-body
+{
+    width: 100%;
+}
