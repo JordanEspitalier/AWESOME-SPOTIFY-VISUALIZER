@@ -2,13 +2,45 @@
 {
     width: 100%;
     overflow: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .collectionDisplay-header
 {
-    height: 40%;
+    display: flex;
+    background: linear-gradient(180deg, rgba(78,56,153,1) 0%, rgba(57,41,110,1) 60%, rgba(31,23,61,1) 100%);
+    gap: 30px;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-top: 60px;
 }
 
+.collectionDisplay-header-image
+{
+    width: 230px;
+    height: 230px;
+    border-radius: 5px;
+}
+.collectionDisplay-header-infos
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.collectionDisplay-header-infos-title
+{
+    font-size: 64px;
+    font-weight: bold;
+}
+.collectionDisplay-header-infos-totalItems
+{
+    font-weight: bold;
+}
 .collectionDisplay-table
 {
     width: 100%;
@@ -23,9 +55,38 @@
     background-color: rgb(30, 30, 30);
     top: 0;
     text-align: left;
+    width: 100%;
+}
+.collectionDisplay-table-header-tr
+{
+    width: 100%;
+}
+.collectionDisplay-table-header-tr-hash
+{
+    width: 4%;
+    text-align: center;
+}
+.collectionDisplay-table-header-tr-title
+{
+    width: 51%;
+}
+.collectionDisplay-table-header-tr-album
+{
+    width: 40%;
+}
+.collectionDisplay-table-header-tr-time
+{
+    width: 5%;
 }
 
 .collectionDisplay-table-body
 {
     width: 100%;
+}
+.collectionDisplay-table-body:before
+{
+    content:"@";
+    display:block;
+    line-height:10px;
+    text-indent:-99999px;
 }
