@@ -1,19 +1,22 @@
 
 import { Link } from 'react-router-dom'
 import './navBar.css'
-import { useUserStore } from '../../store/user'
 import { useEffect, useState } from 'react'
-import { getCurrentUserPlaylists, getCurrentUserSavedTracks } from '../../services/apiRequest/user'
+import { getCurrentUserPlaylists } from '../../services/apiRequest/user'
 
 export default function NavBar () 
 {
     const [currentUserPlaylists, setCurrentUserPlaylists] = useState<any>()
-    
     useEffect(()=>
     {
-        getCurrentUserPlaylists()
-        .then(data => setCurrentUserPlaylists(data))
-        .catch(error => console.log(error))
+
+            getCurrentUserPlaylists({})
+            .then(data =>{
+                setCurrentUserPlaylists(data.items)
+            } 
+            )
+            .catch(error => console.log(error))
+
     },[])
     return (
         <nav className="nav-bar">
@@ -26,7 +29,8 @@ export default function NavBar ()
                     Library
                 </div>
                 <ul>
-                    <li><Link to={`/collection`}>Liked Tracks</Link></li>
+                    <li key={'kdjsmlk'}><Link to={`/collection`}>Liked Tracks</Link></li>
+                    {currentUserPlaylists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><Link to={`/playlist/${item.id}`}>{item.name}</Link></li>)}
                 </ul>
             </div>
         </nav>

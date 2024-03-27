@@ -8,7 +8,8 @@ import Search from "../pages/Search";
 import SearchDisplayAll from "../components/react/searchDisplay/SearchDisplayAll";
 import SearchDisplay from "../components/react/searchDisplay/SearchDisplay";
 import { currentToken, getToken } from "../services/auth";
-import CollectionDisplay from "../components/react/CollectionDisplay";
+import CollectionDisplayLikedTracks from "../components/react/collectionDisplay/CollectionDisplayLikedTracks";
+import CollectionDisplayPlaylist from "../components/react/collectionDisplay/CollectionDisplayPlaylist";
 
 
 export const router = createBrowserRouter(
@@ -55,15 +56,15 @@ export const router = createBrowserRouter(
         },
         {
           path : "collection",
-          element : <CollectionDisplay type="likedTracks"/>
+          element : <CollectionDisplayLikedTracks/>
         },
         {
           path : "album/:id",
-          element : <CollectionDisplay type="album"/>
+          //element : <CollectionDisplay/>
         },
         {
           path : "playlist/:id",
-          element : <CollectionDisplay type="playlist"/>
+          element : <CollectionDisplayPlaylist/>
         },
 
       ],
