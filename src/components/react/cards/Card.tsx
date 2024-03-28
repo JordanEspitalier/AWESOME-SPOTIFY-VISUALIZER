@@ -1,15 +1,12 @@
 import { SearchType } from '../../../models/SearchTypes'
+import { substringTool } from '../../../utils/substringTool'
 import './card.css'
 interface CardProps
 {
     item : any
     type : SearchType
 }
-const substringTool = (string : string, limit : number) =>
-{
-    if(string.length > limit) return `${string.substring(0, limit)}...`
-    return string
-}
+
 
 export default function Card ({item, type} : CardProps) 
 {

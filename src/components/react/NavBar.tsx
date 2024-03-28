@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import './navBar.css'
 import { useEffect, useState } from 'react'
 import { getCurrentUserPlaylists } from '../../services/apiRequest/user'
+import LibraryCard from './cards/LibraryCard'
+import { useUserStore } from '../../store/user'
 
 export default function NavBar () 
 {
     const [currentUserPlaylists, setCurrentUserPlaylists] = useState<any>()
+    const curentUserProfile = useUserStore(state => state.curentUserProfile)
     useEffect(()=>
     {
 
@@ -28,9 +31,18 @@ export default function NavBar ()
                 <div className='library-header'>
                     Library
                 </div>
-                <ul>
-                    <li key={'kdjsmlk'}><Link to={`/collection`}>Liked Tracks</Link></li>
-                    {currentUserPlaylists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><Link to={`/playlist/${item.id}`}>{item.name}</Link></li>)}
+                <ul className='library-list'>
+                    <li>
+                        <Link className='libraryCard' to={`/collection`}>
+                            <img className='libraryCard-image' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+                                <div className='libraryCard-content'>
+                                <div className='libraryCard-content-name'>Liked Tracks</div>
+                                <div className='libraryCard-content-type'>Playlist - {'id' in curentUserProfile ? curentUserProfile.id : ''}</div>
+                            </div>
+                        </Link>
+
+                    </li>
+                    {currentUserPlaylists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><LibraryCard item={item}/></li>)}
                 </ul>
             </div>
         </nav>

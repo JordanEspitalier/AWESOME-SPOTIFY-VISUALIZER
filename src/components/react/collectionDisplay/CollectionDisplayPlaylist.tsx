@@ -88,9 +88,10 @@ useEffect(()=>
       <>
         <header className="collectionDisplay-header">
             <>
-            <img className="collectionDisplay-header-image" src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+            <img className="collectionDisplay-header-image" src={playlist.images ? playlist.images[0].url : "https://misc.scdn.co/liked-songs/liked-songs-640.png"}/>
             <div className="collectionDisplay-header-infos">
                 <div className="collectionDisplay-header-infos-title">{playlist ? playlist.name : '...'}</div>
+                {playlist.description && <div className="collectionDisplay-header-infos-description">{playlist.description}</div>}
                 <div className="collectionDisplay-header-infos-totalItems">{playlist ? playlist.tracks.total : '...'} tracks</div>
             </div>
             </>

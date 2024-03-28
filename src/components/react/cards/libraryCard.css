@@ -1,0 +1,39 @@
+.libraryCard
+{
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 10px;
+}
+.libraryCard:hover
+{
+    background-color: rgba(41, 41, 41, 1);
+}
+
+.libraryCard-image
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+.libraryCard-content
+{
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+}
+.libraryCard-content-name
+{
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+.libraryCard-content-type
+{
+    font-size: 14px;
+    color: rgb(167, 167, 167);
+    text-transform: capitalize;
+}

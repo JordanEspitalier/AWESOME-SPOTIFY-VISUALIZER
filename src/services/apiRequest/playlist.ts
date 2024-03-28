@@ -14,11 +14,14 @@ export const getPlaylist = async ({playlistId, next} : {playlistId : string, nex
     } catch (error : any) {
         if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired')
             {
-                refreshToken()
-                let response
-                if(next) response = await axios.get<any>(`${next}`, { headers })
-                else response = await axios.get<any>(`${API_BASE_URI}playlists/${playlistId}`, { headers })
-                return response?.data
+                const success = await refreshToken()
+                if(success)
+                {
+                    let response
+                    if(next) response = await axios.get<any>(`${next}`, { headers })
+                    else response = await axios.get<any>(`${API_BASE_URI}playlists/${playlistId}`, { headers })
+                    return response?.data
+                }
             } 
         throw new Error(error)  
     }
