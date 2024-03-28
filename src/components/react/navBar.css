@@ -41,8 +41,13 @@
     background-color: rgb(20, 20, 20);
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 10px;
+    color: rgb(167, 167, 167);
+    font-weight: bold;
+    font-size: 22px;
 }
 .library-list
 {
     height: 95%;
+
 }

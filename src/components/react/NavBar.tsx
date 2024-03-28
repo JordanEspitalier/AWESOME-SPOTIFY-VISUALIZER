@@ -2,13 +2,15 @@
 import { Link } from 'react-router-dom'
 import './navBar.css'
 import { useEffect, useState } from 'react'
-import { getCurrentUserPlaylists } from '../../services/apiRequest/user'
+import { getCurrentUserPlaylists } from '../../services/apiRequest/playlist'
 import LibraryCard from './cards/LibraryCard'
 import { useUserStore } from '../../store/user'
+import { getCurrentUserSavedAlbums } from '../../services/apiRequest/albums'
 
 export default function NavBar () 
 {
     const [currentUserPlaylists, setCurrentUserPlaylists] = useState<any>()
+    const [currentUserSavedAlbums, setCurrentUserSavedAlbums] = useState<any>()
     const curentUserProfile = useUserStore(state => state.curentUserProfile)
     useEffect(()=>
     {
@@ -16,6 +18,13 @@ export default function NavBar ()
             getCurrentUserPlaylists({})
             .then(data =>{
                 setCurrentUserPlaylists(data.items)
+            } 
+            )
+            .catch(error => console.log(error))
+
+            getCurrentUserSavedAlbums({})
+            .then(data =>{
+                setCurrentUserSavedAlbums(data.items)
             } 
             )
             .catch(error => console.log(error))
@@ -43,6 +52,7 @@ export default function NavBar ()
 
                     </li>
                     {currentUserPlaylists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><LibraryCard item={item}/></li>)}
+                    {currentUserSavedAlbums && currentUserSavedAlbums.map((item : any, index: any) => <li key={item.album.id}><LibraryCard item={item.album}/></li>)}
                 </ul>
             </div>
         </nav>
