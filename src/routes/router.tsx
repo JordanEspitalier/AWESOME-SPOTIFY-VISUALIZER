@@ -10,6 +10,7 @@ import SearchDisplay from "../components/react/searchDisplay/SearchDisplay";
 import { currentToken, getToken } from "../services/auth";
 import CollectionDisplayLikedTracks from "../components/react/collectionDisplay/CollectionDisplayLikedTracks";
 import CollectionDisplayPlaylist from "../components/react/collectionDisplay/CollectionDisplayPlaylist";
+import CollectionDisplayAlbum from "../components/react/collectionDisplay/CollectionDisplayAlbum";
 
 
 export const router = createBrowserRouter(
@@ -60,7 +61,7 @@ export const router = createBrowserRouter(
         },
         {
           path : "album/:id",
-          //element : <CollectionDisplay/>
+          element : <CollectionDisplayAlbum/>
         },
         {
           path : "playlist/:id",

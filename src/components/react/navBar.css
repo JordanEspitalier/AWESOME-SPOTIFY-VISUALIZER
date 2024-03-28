@@ -35,16 +35,49 @@
 .library-header
 {
     font-size: 20px;
-    height: 5%;
+    height: 13%;
     position: sticky;
     top: 0;
     background-color: rgb(20, 20, 20);
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 10px;
+
+}
+.library-header-title
+{
     color: rgb(167, 167, 167);
     font-weight: bold;
     font-size: 22px;
+    padding-left: 6px;
+}
+.library-header-tags
+{
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.library-header-tags > *
+{
+    font-size: 14px;
+    background-color: rgb(50, 50, 50);
+    padding: 5px 12px 5px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s
+}
+.library-header-tags > *:hover
+{
+    background-color: rgb(70, 70, 70);
+}
+.library-header-tags > .active
+{
+    background-color: white;
+    color: black;
+}
+.library-header-tags-close
+{
+    border-radius: 50%;
 }
 .library-list
 {

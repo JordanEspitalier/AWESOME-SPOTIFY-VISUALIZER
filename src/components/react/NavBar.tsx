@@ -11,6 +11,7 @@ export default function NavBar ()
 {
     const [currentUserPlaylists, setCurrentUserPlaylists] = useState<any>()
     const [currentUserSavedAlbums, setCurrentUserSavedAlbums] = useState<any>()
+    const [libraryFilter, setLibraryFilter] = useState<{playlists : boolean, albums : boolean}>({playlists : true, albums : true})
     const curentUserProfile = useUserStore(state => state.curentUserProfile)
     useEffect(()=>
     {
@@ -38,7 +39,15 @@ export default function NavBar ()
             </ul>
             <div className='library'>
                 <div className='library-header'>
-                    Library
+                    <div className='library-header-title'>Library</div>
+                    <ul className='library-header-tags'>
+                        {libraryFilter.albums === false ||  libraryFilter.playlists === false ?
+                        <li className='library-header-tags-close' onClick={()=>setLibraryFilter({playlists : true, albums : true})}>X</li> 
+                        : null
+                        }
+                        <li className={!libraryFilter.albums ?'active' : ''} onClick={()=>setLibraryFilter({playlists : true, albums : false})}>Playlists</li>
+                        <li className={!libraryFilter.playlists ?'active' : ''} onClick={()=>setLibraryFilter({playlists : false, albums : true})}>Albums</li>
+                    </ul>
                 </div>
                 <ul className='library-list'>
                     <li>
@@ -51,8 +60,8 @@ export default function NavBar ()
                         </Link>
 
                     </li>
-                    {currentUserPlaylists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><LibraryCard item={item}/></li>)}
-                    {currentUserSavedAlbums && currentUserSavedAlbums.map((item : any, index: any) => <li key={item.album.id}><LibraryCard item={item.album}/></li>)}
+                    {currentUserPlaylists && libraryFilter.playlists && currentUserPlaylists.map((item : any, index: any) => <li key={item.id}><LibraryCard item={item}/></li>)}
+                    {currentUserSavedAlbums && libraryFilter.albums && currentUserSavedAlbums.map((item : any, index: any) => <li key={item.album.id}><LibraryCard item={item.album}/></li>)}
                 </ul>
             </div>
         </nav>

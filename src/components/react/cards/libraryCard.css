@@ -8,9 +8,13 @@
     padding-bottom: 8px;
     border-radius: 10px;
 }
+.libraryCard.active
+{
+    background-color: rgba(50, 50,50, 1);
+}
 .libraryCard:hover
 {
-    background-color: rgba(41, 41, 41, 1);
+    background-color: rgba(50, 50,50, 1);
 }
 
 .libraryCard-image
