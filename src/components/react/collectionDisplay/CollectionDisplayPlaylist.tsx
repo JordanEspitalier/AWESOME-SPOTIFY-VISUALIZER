@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import TrackRow from "../table/TrackRow"
 import './collectionDisplay.css'
 import { getPlaylist } from "../../../services/apiRequest/playlist"
 
+// Function to replace anchor in string '<a href'www.url'>something</a>' with only 'something'
+const replacer = (match:any, p1:string, p2:string, p3:string, offset:any, string:any) =>{
+    
+    return  p3
+}
 
 export default function CollectionDisplayPlaylist() {
 const {id} = useParams()
@@ -11,6 +16,9 @@ const {id} = useParams()
 const [nextQuery, setNextQuery] = useState<string>()
 const [playlist, setPlaylist] = useState<any>()
 const [previousId, setPreviousId] = useState<any>()
+// Regex to extract data from '<a>string</a>'
+const extractHtmlABaliseRegex = /(?:(?:<a href=spotify:)([a-z]{3,})(?::)([^:]{3,})(?:>)([^\<]*?)<\/a>){1,}/g
+
 
 useEffect(()=>
 {
@@ -91,7 +99,13 @@ useEffect(()=>
             <img className="collectionDisplay-header-image" src={playlist.images ? playlist.images[0].url : "https://misc.scdn.co/liked-songs/liked-songs-640.png"}/>
             <div className="collectionDisplay-header-infos">
                 <div className="collectionDisplay-header-infos-title">{playlist ? playlist.name : '...'}</div>
-                {playlist.description && <div className="collectionDisplay-header-infos-description">{playlist.description}</div>}
+                {playlist.description && 
+                <div className="collectionDisplay-header-infos-description">
+                    {/* If we have a match with html anchor in the description with replace them else we display the description */}
+                    {playlist.description.match(extractHtmlABaliseRegex) ?
+                        playlist.description.replace(extractHtmlABaliseRegex, replacer) 
+                    :   playlist.description}
+                </div>}
                 <div className="collectionDisplay-header-infos-totalItems">{playlist ? playlist.tracks.total : '...'} tracks</div>
             </div>
             </>

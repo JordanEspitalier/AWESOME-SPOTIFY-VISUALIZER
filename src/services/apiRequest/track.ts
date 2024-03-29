@@ -12,7 +12,7 @@ export const getTrackAudioAnalysis = async (id : string) =>
     } catch (error : any) {
         if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired')
             {
-                refreshToken()
+                await refreshToken()
                 const {data} = await axios.get<any>(`${API_BASE_URI}audio-analysis/${id}`, { headers })
 
                 return data

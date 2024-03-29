@@ -88,20 +88,25 @@ export async function redirectToSpotifyAuthorize() {
   }
   
   export async function refreshToken() {
-    const params = new URLSearchParams()
-    params.append('client_id', CLIENT_ID)
-    params.append('grant_type', 'refresh_token')
-    params.append('refresh_token', currentToken.refresh_token || '')
-
-    const response = await fetch(TOKEN_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: params
-    })
+    try {
+      
+      const params = new URLSearchParams()
+      params.append('client_id', CLIENT_ID)
+      params.append('grant_type', 'refresh_token')
+      params.append('refresh_token', currentToken.refresh_token || '')
   
-    const token =  await response.json()
-    if(token.error) return redirect('/login')
-    currentToken.save(token)
+      const response = await fetch(TOKEN_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
+      })
+    
+      const token =  await response.json()
+      currentToken.save(token)
+    } catch (error) {
+      
+      redirect('/login')
+    }
   }

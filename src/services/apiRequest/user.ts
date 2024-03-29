@@ -14,7 +14,7 @@ export const getCurrentUserProfile = async () =>
     } catch (error : any) {
         if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired')
             {
-                refreshToken()
+                await refreshToken()
                 const {data} = await axios.get<UserProfile>(`${API_BASE_URI}me`, { headers })
                 return data
             } 
@@ -36,7 +36,7 @@ export const getCurrentUserSavedTracks = async ({limit, next} : {limit: number, 
     } catch (error : any) {
         if(error.response.data.error.status = 401 && error.response.data.error.message === 'The access token expired')
             {
-                refreshToken()
+                await refreshToken()
                 let response
                 if(next) response = await axios.get<any>(`${next}`, { headers })
                 else response = await axios.get<any>(`${API_BASE_URI}me/tracks?limit=${limit}`, { headers })
